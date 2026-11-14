@@ -211,8 +211,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &820001001
+GameObject:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 820001002}
+  - component: {fileID: 820001003}
+  m_Layer: 5
+  m_Name: Main Menu
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!224 &820001002
+RectTransform:
+  m_GameObject: {fileID: 820001001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &820001003
+MonoBehaviour:
+  m_GameObject: {fileID: 820001001}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: e14630921a024d57989a08794fb68829, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenu
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1943042232}
+  - {fileID: 820001002}

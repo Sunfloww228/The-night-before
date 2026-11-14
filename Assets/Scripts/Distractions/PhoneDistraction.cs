@@ -2,8 +2,9 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndDragHandler, IScrollHandler
+public sealed class PhoneDistraction : DistractionBase
 {
+    [SerializeField] private GameObject telephonePanel;
     [SerializeField] private Image frame;
     [SerializeField] private Image display;
     [SerializeField] private Sprite[] memes;
@@ -12,7 +13,6 @@ public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndD
     [SerializeField, Min(1)] private int minMemes = 2;
     [SerializeField, Min(1)] private int maxMemes = 5;
     [SerializeField, Min(0)] private float swipeCooldown = 1f;
-    [SerializeField, Min(1)] private float swipeDistance = 60f;
     [SerializeField, Min(0)] private float watchTime = 2f;
     [SerializeField, Min(0)] private float stuckAfter = 8f;
     [SerializeField, Min(0)] private float focusPerSecond = 1f;
@@ -31,6 +31,8 @@ public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndD
         elapsed = 0f;
         ShowCard();
         base.Activate();
+        if (telephonePanel != null)
+            telephonePanel.SetActive(true);
         Game.SetWorkBlocked(this, true);
 
     }
@@ -52,19 +54,6 @@ public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndD
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData) { }
-
-    public void OnScroll(PointerEventData eventData)
-    {
-        if (eventData.scrollDelta.y < 0f)
-            Swipe();
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (Vector2.Distance(eventData.pressPosition, eventData.position) >= swipeDistance)
-            Swipe();
-    }
 
     public void Swipe()
     {
@@ -79,6 +68,9 @@ public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndD
     {
         if (Game != null)
             Game.SetWorkBlocked(this, false);
+
+        if (telephonePanel != null)
+            telephonePanel.SetActive(false);
 
         base.Resolve();
     }
