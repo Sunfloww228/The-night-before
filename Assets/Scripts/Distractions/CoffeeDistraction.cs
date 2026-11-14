@@ -10,10 +10,6 @@ public sealed class CoffeeDistraction : DistractionBase
     [SerializeField] private Button takeCupButton;
 
     [Header("Cup")]
-    [SerializeField] private Image machineCupImage;
-    [SerializeField] private Sprite machineEmptyCupSprite;
-    [SerializeField] private Sprite machineFullCupSprite;
-
     [SerializeField] private SpriteRenderer tableCupRenderer;
     [SerializeField] private Sprite tableEmptyCupSprite;
     [SerializeField] private Sprite tableFullCupSprite;
@@ -83,8 +79,6 @@ public sealed class CoffeeDistraction : DistractionBase
             coffeeMakingPanel.SetActive(false);
         if (takeCupButton != null)
             takeCupButton.interactable = false;
-        if (machineCupImage != null)
-            machineCupImage.sprite = machineEmptyCupSprite;
     }
 
 
@@ -210,9 +204,6 @@ public sealed class CoffeeDistraction : DistractionBase
                 EndBrew();
                 cupReady = true;
                 cooledAt = Game.TimeLeft - coolTime;
-
-                if (machineCupImage != null)
-                    machineCupImage.sprite = machineFullCupSprite;
 
                 if (takeCupButton != null)
                     takeCupButton.interactable = true;
