@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9f9396d6a85b74e8cf16a6c785235c, type: 3}
+  m_Name: Balance
+  m_EditorClassIdentifier: Assembly-CSharp::GameBalance
+  durationSeconds: 120
+  startingFocus: 70
+  startingStress: 0
+  workStressPerSecond: 1
+  stressDamageThreshold: 70
+  stressDamageFactor: 0.2
+  flowThreshold: 80
+  normalThreshold: 50
+  anxietyThreshold: 20
+  flowMultiplier: 2
+  normalMultiplier: 1
+  anxietyMultiplier: 0.5
+  panicMultiplier: 0.1

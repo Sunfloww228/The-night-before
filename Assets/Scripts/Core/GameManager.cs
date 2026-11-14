@@ -1,0 +1,119 @@
+﻿using System;
+using UnityEngine;
+
+public sealed class GameManager : MonoBehaviour
+{
+
+    [SerializeField] private GameBalance balance;
+    [SerializeField] private bool startAutomatically = true;
+
+    private bool workBlocked;
+
+    public GameState State { get; } = new GameState();
+
+    // GameState остаётся единственным источником времени и статуса.
+    public float TimeLeft => State.RemainingTime;
+    public bool IsPlaying => State.Status == GameStatus.Running;
+
+    public event Action<GameStatus> SessionEnded;
+
+    // Уведомления для таймера и экрана результата.
+    public event Action OnTimeChanged;
+    public event Action<bool> OnGameFinished;
+
+
+    private void Start()
+    {
+        if (startAutomatically && State.Status == GameStatus.Idle)
+            StartSession();
+    }
+
+    public void StartSession()
+    {
+        if (State.Status == GameStatus.Running)
+            return;
+
+        RestartGame();
+    }
+
+    public void RestartGame()
+    {
+        if (balance == null)
+        {
+            Debug.LogError("для начала вставь гейм баланс.", this);
+            return;
+        }
+
+        workBlocked = false;
+        State.Set(balance.StartingFocus, balance.StartingStress, 0f,
+            balance.DurationSeconds, GameStatus.Running);
+        OnTimeChanged?.Invoke();
+    }
+
+    public void SetWorkBlocked(bool blocked)
+    {
+        if (State.Status == GameStatus.Running)
+            workBlocked = blocked;
+    }
+
+    public void ApplyResourceChanges(float focusDelta, float stressDelta)
+    {
+        if (State.Status != GameStatus.Running)
+            return;
+
+        Commit(State.Focus + focusDelta, State.Stress + stressDelta,
+            State.Progress, State.RemainingTime);
+    }
+
+    private void Update()
+    {
+        if (State.Status != GameStatus.Running)
+            return;
+
+        float step = GameTimer.GetStep(State.RemainingTime, Time.deltaTime);
+        if (step <= 0f)
+            return;
+
+        float stress = State.Stress;
+        float progress = State.Progress;
+
+        if (!workBlocked && stress < GameState.ResourceMax)
+        {
+            progress += balance.BaseProgressPerSecond * balance.GetWorkMultiplier(State.Focus) * step;
+            stress = Mathf.Min(GameState.ResourceMax, stress + balance.WorkStressPerSecond * step);
+        }
+
+        float focus = State.Focus - balance.GetStressDamagePerSecond(stress) * step;
+        Commit(focus, stress, progress, State.RemainingTime - step);
+    }
+
+    // Ручная проверка использует те же правила, что и Update.
+    public void CheckGameOver()
+    {
+        if (IsPlaying)
+            Commit(State.Focus, State.Stress, State.Progress, TimeLeft);
+    }
+
+    private void Commit(float focus, float stress, float progress, float remainingTime)
+    {
+        GameStatus status = GameStatus.Running;
+        if (focus <= 0f)
+            status = GameStatus.LostFocus;
+        else if (progress >= GameState.ResourceMax)
+            status = GameStatus.Won;
+        else if (remainingTime <= 0f)
+            status = GameStatus.DeadlineExpired;
+
+        // Сначала публикуем полное состояние, затем обновляем таймер и результат.
+        bool timeChanged = TimeLeft != remainingTime;
+        State.Set(focus, stress, progress, remainingTime, status);
+        if (timeChanged)
+            OnTimeChanged?.Invoke();
+
+        if (status != GameStatus.Running)
+        {
+            SessionEnded?.Invoke(status);
+            OnGameFinished?.Invoke(status == GameStatus.Won);
+        }
+    }
+}
