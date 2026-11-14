@@ -29,8 +29,6 @@ public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndD
 
         remainingMemes = Random.Range(minMemes, Mathf.Max(minMemes, maxMemes) + 1);
         elapsed = 0f;
-        if (frame == null)
-            BuildPanel();
         ShowCard();
         base.Activate();
         Game.SetWorkBlocked(this, true);
@@ -102,45 +100,5 @@ public sealed class PhoneDistraction : DistractionBase, IBeginDragHandler, IEndD
     private Sprite PickMeme()
     {
         return memes != null && memes.Length > 0 ? memes[Random.Range(0, memes.Length)] : null;
-    }
-
-    private void BuildPanel()
-    {
-        Canvas canvas = gameObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 30;
-        CanvasScaler scaler = gameObject.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1280f, 720f);
-        scaler.matchWidthOrHeight = 1f;
-        gameObject.AddComponent<GraphicRaycaster>();
-
-        Image shade = MakeImage("Backdrop", transform, new Color(0f, 0f, 0f, 0.72f));
-        Stretch(shade.rectTransform, 0f);
-        Image body = MakeImage("Phone", shade.transform, new Color(0.08f, 0.08f, 0.1f));
-        body.rectTransform.sizeDelta = new Vector2(328f, 576f);
-        frame = MakeImage("Card Frame", body.transform, Color.red);
-        frame.rectTransform.sizeDelta = new Vector2(300f, 520f);
-        display = MakeImage("Meme", frame.transform, Color.white);
-        Stretch(display.rectTransform, 6f);
-        display.preserveAspect = true;
-        display.raycastTarget = false;
-    }
-
-    private static Image MakeImage(string objectName, Transform parent, Color color)
-    {
-        GameObject child = new GameObject(objectName, typeof(RectTransform), typeof(Image));
-        child.transform.SetParent(parent, false);
-        Image image = child.GetComponent<Image>();
-        image.color = color;
-        return image;
-    }
-
-    private static void Stretch(RectTransform rect, float padding)
-    {
-        rect.anchorMin = Vector2.zero;
-        rect.anchorMax = Vector2.one;
-        rect.offsetMin = Vector2.one * padding;
-        rect.offsetMax = -Vector2.one * padding;
     }
 }

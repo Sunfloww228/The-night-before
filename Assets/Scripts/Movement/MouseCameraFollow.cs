@@ -21,7 +21,6 @@ public class MouseCameraFollow : MonoBehaviour
     private Collider2D focusedTarget;
     private SpriteRenderer focusedSprite;
     private Collider2D releasedTarget;
-    private bool returningFromFocus;
     private Vector2 previousCursor;
 
     public void ReleaseFocus(Collider2D target)
@@ -30,7 +29,6 @@ public class MouseCameraFollow : MonoBehaviour
             return;
 
         releasedTarget = focusedTarget;
-        returningFromFocus = true;
         focusedTarget = null;
         focusedSprite = null;
     }
@@ -72,15 +70,16 @@ public class MouseCameraFollow : MonoBehaviour
         }
         else if (focusedTarget == null || !focusedTarget.isActiveAndEnabled)
         {
-            focusedTarget = null;
-            // Rearm hover after the pointer leaves the released object at normal zoom.
             if (releasedTarget != null &&
                 (!pointerInside || !IsPointerOver(releasedTarget, worldPoint)))
                 releasedTarget = null;
 
-            if (!returningFromFocus && pointerInside)
+            if (pointerInside)
             {
-                SetFocus(FindTarget(worldPoint));
+                Collider2D target = FindTarget(worldPoint);
+
+                if (target != null)
+                    SetFocus(target);
             }
         }
         else if (pointerInside && cursorMoved)
@@ -96,13 +95,7 @@ public class MouseCameraFollow : MonoBehaviour
         float targetSize = focusing ? normalSize * hoverSizeMultiplier : normalSize;
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetSize,
             Blend(focusing ? zoomInSpeed : zoomOutSpeed));
-        if (Mathf.Abs(cam.orthographicSize - targetSize) < 0.001f)
-        {
-            cam.orthographicSize = targetSize;
-            if (!focusing)
-                returningFromFocus = false;
-        }
-
+        
         Vector2 extents = new Vector2(cam.orthographicSize * cam.aspect, cam.orthographicSize);
         Vector3 position = transform.position;
         if (focusing)
@@ -129,6 +122,12 @@ public class MouseCameraFollow : MonoBehaviour
     {
         focusedTarget = target;
         focusedSprite = target != null ? target.GetComponentInParent<SpriteRenderer>() : null;
+
+
+        Debug.Log(
+        "Camera focus: " +
+        (target != null ? target.name : "NONE")
+    );
     }
 
     private Collider2D FindTarget(Vector2 point)

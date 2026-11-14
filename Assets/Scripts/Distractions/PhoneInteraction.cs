@@ -40,8 +40,35 @@ public sealed class PhoneInteraction : MonoBehaviour
         if (mouse != null && !panel.IsActive && !panelWasOpen && !cancel)
         {
             Vector2 cursor = mouse.position.ReadValue();
-            hovering = hitArea.isActiveAndEnabled && interactionCamera.pixelRect.Contains(cursor) &&
-                hitArea.OverlapPoint(interactionCamera.ScreenToWorldPoint(cursor));
+            Vector2 worldPoint = interactionCamera.ScreenToWorldPoint(cursor);
+
+            Bounds bounds = phoneSprite.bounds;
+
+            bool overCollider =
+                hitArea.isActiveAndEnabled &&
+                hitArea.OverlapPoint(worldPoint);
+
+            bool overSprite =
+                phoneSprite.enabled &&
+                phoneSprite.sprite != null &&
+                bounds.Contains(new Vector3(
+                    worldPoint.x,
+                    worldPoint.y,
+                    bounds.center.z
+                ));
+
+            hovering =
+                interactionCamera.pixelRect.Contains(cursor) &&
+                (overCollider || overSprite);
+
+            if (hovering && mouse.leftButton.wasPressedThisFrame)
+            {
+                Debug.Log("Phone clicked");
+
+                panel.Activate();
+
+                Debug.Log("Phone active: " + panel.IsActive);
+            }
             if (hovering && mouse.leftButton.wasPressedThisFrame)
                 panel.Activate();
         }
