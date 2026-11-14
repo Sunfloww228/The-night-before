@@ -36,7 +36,18 @@ public class MouseCameraFollow : MonoBehaviour
     private void Awake()
     {
         cam = GetComponent<Camera>();
-        normalSize = cam.orthographicSize;
+        Bounds bounds = background.bounds;
+
+        float backgroundHeight = bounds.size.y;
+        float backgroundWidth = bounds.size.x;
+
+        float sizeByHeight = backgroundHeight / 1.5f;
+        float sizeByWidth = backgroundWidth / (1.5f * cam.aspect);
+
+        // Берём меньший размер, чтобы камера могла
+        // перемещаться по фону.
+        normalSize = Mathf.Min(sizeByHeight, sizeByWidth) * 0.7f;
+        cam.orthographicSize = normalSize;
     }
 
     private void LateUpdate()
@@ -95,25 +106,56 @@ public class MouseCameraFollow : MonoBehaviour
         float targetSize = focusing ? normalSize * hoverSizeMultiplier : normalSize;
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetSize,
             Blend(focusing ? zoomInSpeed : zoomOutSpeed));
-        
-        Vector2 extents = new Vector2(cam.orthographicSize * cam.aspect, cam.orthographicSize);
+
+        Vector2 extents = new Vector2(
+            cam.orthographicSize * cam.aspect,
+            cam.orthographicSize
+        );
+
         Vector3 position = transform.position;
+
         if (focusing)
         {
             Vector2 centerOfTarget = focusedSprite != null
                 ? focusedSprite.bounds.center
                 : focusedTarget.bounds.center;
-            Vector2 next = Vector2.Lerp(position, centerOfTarget, Blend(zoomInSpeed));
+
+            Vector2 next = Vector2.Lerp(
+                position,
+                centerOfTarget,
+                Blend(zoomInSpeed)
+            );
+
             position.x = next.x;
             position.y = next.y;
         }
         else
         {
-            Vector2 next = Vector2.Lerp(position, normalPosition, Blend(smoothSpeed));
-            Vector2 range = GetPanRange(bounds, extents);
-            position.x = Mathf.Clamp(next.x, center.x - range.x, center.x + range.x);
-            position.y = Mathf.Clamp(next.y, center.y - range.y, center.y + range.y);
+            Vector2 next = Vector2.Lerp(
+                position,
+                normalPosition,
+                Blend(smoothSpeed)
+            );
+
+            position.x = next.x;
+            position.y = next.y;
         }
+
+        // Ограничиваем камеру границами фона
+        // независимо от режима фокусировки.
+        Vector2 range = GetPanRange(bounds, extents);
+
+        position.x = Mathf.Clamp(
+            position.x,
+            center.x - range.x,
+            center.x + range.x
+        );
+
+        position.y = Mathf.Clamp(
+            position.y,
+            center.y - range.y,
+            center.y + range.y
+        );
 
         transform.position = position;
     }
@@ -164,4 +206,6 @@ public class MouseCameraFollow : MonoBehaviour
     }
 
     private static float Blend(float speed) => 1f - Mathf.Exp(-speed * Time.unscaledDeltaTime);
+
+    public Collider2D FocusedTarget => focusedTarget;
 }

@@ -1,16 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class CoffeeDistraction : DistractionBase
 {
-    [SerializeField] private GameObject machinePanel;
-    [SerializeField] private GameObject fullCup;
+    [Header("UI")]
+    [SerializeField] private GameObject coffeeGroundsPanel;
+    [SerializeField] private GameObject coffeeMakingPanel;
+    [SerializeField] private Button takeCupButton;
+
+    [Header("Cup")]
+    [SerializeField] private SpriteRenderer tableCupRenderer;
+    [SerializeField] private Sprite tableEmptyCupSprite;
+    [SerializeField] private Sprite tableFullCupSprite;
+
+    [Header("Time")]
     [SerializeField, Min(0)] private float brewTime = 2f;
     [SerializeField, Min(0)] private float coolTime = 15f;
     [SerializeField, Min(0)] private float crashDelay = 20f;
+
+    [Header("Effects")]
     [SerializeField, Min(0)] private float hotReward = 15f;
     [SerializeField, Min(0)] private float coolReward = 5f;
-    [SerializeField, Min(0)] private float crashCost = 10f;
+    [SerializeField, Min(0)] private float crashFocusCost = 10f;
+
+    //[SerializeField] private Animator groundsAnimator;
+
 
     private readonly List<float> crashDeadlines = new List<float>();
     private bool machineOpen;
@@ -19,28 +34,81 @@ public sealed class CoffeeDistraction : DistractionBase
     private bool cupReady;
     private float brewElapsed;
     private float cooledAt;
+    private bool cupOnTable;
+
+    //private bool groundsAnimating;
+
+    public void Interact()
+    {
+        if (!CanActivate())
+            return;
+
+        if (machineOpen)
+            return;
+
+        if (cupOnTable) 
+        {
+            Debug.Log("Пьем!");
+            Drink(); 
+        } 
+
+        else
+        {
+            Debug.Log("Завариваем кофе");
+            Activate();
+        }
+
+    }
+
 
     public override void Activate()
     {
-        if (!CanActivate() || cupReady || machineOpen)
+        if (!CanActivate() || cupReady || cupOnTable || machineOpen)
             return;
 
         machineOpen = true;
         groundsAdded = false;
-        base.Activate();
-        if (machinePanel != null)
-            machinePanel.SetActive(true);
+        holding = false;
+        brewElapsed = 0f;
+
+        if (!IsActive)
+            base.Activate();
+        if (coffeeGroundsPanel != null)
+            coffeeGroundsPanel.SetActive(true);
+        if (coffeeMakingPanel != null)
+            coffeeMakingPanel.SetActive(false);
+        if (takeCupButton != null)
+            takeCupButton.interactable = false;
     }
 
-    public void AddGrounds()
-    {
-        if (machineOpen)
-            groundsAdded = true;
-    }
 
-    public void BeginBrew()
+    public void AddGrounds()  //мешочек с кофе
     {
-        if (!machineOpen || !groundsAdded || holding)
+        if (!machineOpen || groundsAdded)
+            return;
+        groundsAdded = true;
+        //анимация        насыпания
+
+        //groundsAnimating = true;
+        //groundsAnimator.SetTrigger("PourGrounds");
+        coffeeGroundsPanel.SetActive(false);
+        coffeeMakingPanel.SetActive(true);
+    }
+    //public void FinishAddingGrounds()
+    //{
+    //    if (!machineOpen || !groundsAnimating)
+    //        return;
+
+    //    groundsAnimating = false;
+    //    groundsAdded = true;
+
+    //    coffeeGroundsPanel.SetActive(false);
+    //    coffeeMakingPanel.SetActive(true);
+    //}
+
+    public void BeginBrew()    //кнопка включить машину
+    {
+        if (!machineOpen || !groundsAdded || holding || cupReady)
             return;
 
         holding = true;
@@ -56,29 +124,62 @@ public sealed class CoffeeDistraction : DistractionBase
             Game.SetWorkBlocked(this, false);
     }
 
+    public void TakeCup()
+    {
+        if (!machineOpen || !cupReady)
+            return;
+
+        cupReady = false;
+        cupOnTable = true;
+        machineOpen = false;
+
+        if (coffeeMakingPanel != null)
+            coffeeMakingPanel.SetActive(false);
+
+        if (coffeeGroundsPanel != null)
+            coffeeGroundsPanel.SetActive(false);
+
+        UpdateTableCup();
+
+        ResolveIfIdle();
+    }
+
     public void CloseMachine()
     {
+        Debug.LogWarning("CloseMachine вызван\n" + System.Environment.StackTrace);
         machineOpen = false;
-        EndBrew();
-        if (machinePanel != null)
-            machinePanel.SetActive(false);
+        groundsAdded = false;
+        cupReady = false;
 
+        EndBrew();
+        if (coffeeMakingPanel != null)
+            coffeeMakingPanel.SetActive(false);
+        if (coffeeGroundsPanel != null)
+            coffeeGroundsPanel.SetActive(false);
+
+        if (takeCupButton != null)
+            takeCupButton.interactable = false;
         ResolveIfIdle();
     }
 
     public void Drink()
     {
-        if (!cupReady || !Game.IsPlaying)
+        if (!cupOnTable || Game == null || !Game.IsPlaying)
             return;
 
         bool hot = Game.TimeLeft > cooledAt;
-        cupReady = false;
-        if (fullCup != null)
-            fullCup.SetActive(false);
+
+        cupOnTable = false;
+        UpdateTableCup();
+
         if (hot)
             crashDeadlines.Add(Game.TimeLeft - crashDelay);
 
-        Game.ApplyResourceChanges(hot ? hotReward : coolReward, 0f);
+        Game.ApplyResourceChanges(
+            hot ? hotReward : coolReward,
+            0f
+        );
+
         ResolveIfIdle();
     }
 
@@ -90,7 +191,7 @@ public sealed class CoffeeDistraction : DistractionBase
                 continue;
 
             crashDeadlines.RemoveAt(i);
-            Game.ApplyResourceChanges(-crashCost, 0f);
+            Game.ApplyResourceChanges(-crashFocusCost, 0f);
             if (!IsActive)
                 return;
         }
@@ -100,11 +201,13 @@ public sealed class CoffeeDistraction : DistractionBase
             brewElapsed += dt;
             if (brewElapsed >= brewTime)
             {
+                EndBrew();
                 cupReady = true;
                 cooledAt = Game.TimeLeft - coolTime;
-                CloseMachine();
-                if (fullCup != null)
-                    fullCup.SetActive(true);
+
+                if (takeCupButton != null)
+                    takeCupButton.interactable = true;
+                Debug.Log("Кофе готов! Можно забрать чашку.");
             }
         }
 
@@ -113,21 +216,37 @@ public sealed class CoffeeDistraction : DistractionBase
 
     public override void Resolve()
     {
+        Debug.LogWarning("Resolve вызван\n" + System.Environment.StackTrace);
         machineOpen = false;
         cupReady = false;
+        cupOnTable = false;
         crashDeadlines.Clear();
         EndBrew();
-        if (machinePanel != null)
-            machinePanel.SetActive(false);
-        if (fullCup != null)
-            fullCup.SetActive(false);
-
+        if (coffeeMakingPanel != null)
+            coffeeMakingPanel.SetActive(false);
+        if (coffeeGroundsPanel != null)
+            coffeeGroundsPanel.SetActive(false);
+        if (takeCupButton != null)
+            takeCupButton.interactable = false;
+        UpdateTableCup();
         base.Resolve();
     }
 
     private void ResolveIfIdle()
     {
-        if (IsActive && !machineOpen && !cupReady && crashDeadlines.Count == 0)
+        if (IsActive && !machineOpen && !cupReady && !cupOnTable && crashDeadlines.Count == 0)
             Resolve();
     }
+    private void UpdateTableCup()
+    {
+        if (tableCupRenderer == null)
+            return;
+
+        tableCupRenderer.sprite = cupOnTable
+            ? tableFullCupSprite
+            : tableEmptyCupSprite;
+    }
+
+    public bool IsMachineOpen => machineOpen;
+    public bool IsCupFull => cupOnTable;
 }
