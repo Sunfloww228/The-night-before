@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour
@@ -8,6 +9,10 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] private bool startAutomatically = true;
 
     private bool workBlocked;
+    // Each distraction releases only its own block.
+    private readonly HashSet<MonoBehaviour> workBlockers = new HashSet<MonoBehaviour>();
+
+    public event Action SessionRestarting;
 
     public GameState State { get; } = new GameState();
 
@@ -44,7 +49,9 @@ public sealed class GameManager : MonoBehaviour
             return;
         }
 
+        SessionRestarting?.Invoke();
         workBlocked = false;
+        workBlockers.Clear();
         State.Set(balance.StartingFocus, balance.StartingStress, 0f,
             balance.DurationSeconds, GameStatus.Running);
         OnTimeChanged?.Invoke();
@@ -65,6 +72,14 @@ public sealed class GameManager : MonoBehaviour
             State.Progress, State.RemainingTime);
     }
 
+    public void SetWorkBlocked(MonoBehaviour source, bool blocked)
+    {
+        if (blocked && IsPlaying)
+            workBlockers.Add(source);
+        else
+            workBlockers.Remove(source);
+    }
+
     private void Update()
     {
         if (State.Status != GameStatus.Running)
@@ -77,7 +92,7 @@ public sealed class GameManager : MonoBehaviour
         float stress = State.Stress;
         float progress = State.Progress;
 
-        if (!workBlocked && stress < GameState.ResourceMax)
+        if (!workBlocked && workBlockers.Count == 0 && stress < GameState.ResourceMax)
         {
             progress += balance.BaseProgressPerSecond * balance.GetWorkMultiplier(State.Focus) * step;
             stress = Mathf.Min(GameState.ResourceMax, stress + balance.WorkStressPerSecond * step);
