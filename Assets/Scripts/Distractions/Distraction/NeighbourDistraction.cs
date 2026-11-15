@@ -215,6 +215,9 @@ public class NeighbourDistraction : DistractionBase
         if (Game == null || !Game.IsPlaying)
             yield break;
 
+        if (student != null)
+            student.PlaySitting();
+
         walking = false;
         walkingRoutine = null;
 
