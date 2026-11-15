@@ -2,16 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class AdvertisementSpritePair
-{
-    public Sprite normal;
-    public Sprite active;
-}
 public class AdvertismentDistraction : DistractionBase
 {
-    [SerializeField] private AdvertisementSpritePair[] advertisements;
-    [SerializeField] private AdvertisementSlot[] adSlots;
+    [SerializeField] private AdvertisementSlot[] advertisements;
 
     [SerializeField, Min(0f)] private float minAppearTime = 15f;
     [SerializeField, Min(0f)] private float maxAppearTime = 35f;
@@ -54,90 +47,70 @@ public class AdvertismentDistraction : DistractionBase
 
     private void ShowAdvertisements()
     {
-        if (advertisements == null || advertisements.Length == 0 || adSlots == null || adSlots.Length == 0)
+        if (advertisements == null || advertisements.Length == 0)
         {
             ScheduleNextAppearance();
             return;
         }
 
-        List<int> availableSlots = new List<int>();
+        List<AdvertisementSlot> available =
+            new List<AdvertisementSlot>();
 
-        for (int i = 0; i < adSlots.Length; i++)
+        foreach (AdvertisementSlot ad in advertisements)
         {
-            if (adSlots[i] != null &&
-                !adSlots[i].IsOccupied)
+            if (ad != null &&
+                !ad.IsShowing &&
+                !available.Contains(ad))
             {
-                availableSlots.Add(i);
+                available.Add(ad);
             }
         }
 
-        if (availableSlots.Count == 0)
+        if (available.Count == 0)
         {
             ScheduleNextAppearance();
             return;
         }
 
-        // Перемешиваем свободные слоты.
-        for (int i = availableSlots.Count - 1; i > 0; i--)
+        for (int i = available.Count - 1; i > 0; i--)
         {
             int randomIndex = Random.Range(0, i + 1);
 
-            int temp = availableSlots[i];
-            availableSlots[i] = availableSlots[randomIndex];
-            availableSlots[randomIndex] = temp;
+            AdvertisementSlot temp = available[i];
+            available[i] = available[randomIndex];
+            available[randomIndex] = temp;
         }
-
-        // Случайно выбираем количество рекламы.
         int minimum = Mathf.Clamp(
-            minAds, 1, availableSlots.Count
+            minAds, 1, available.Count
         );
 
         int maximum = Mathf.Clamp(
-            maxAds, minimum, availableSlots.Count
+            maxAds, minimum, available.Count
         );
 
         int count = Random.Range(minimum, maximum + 1);
 
-        // Заполняем случайные слоты
-        // случайными рекламными изображениями.
         for (int i = 0; i < count; i++)
         {
-            int slotIndex = availableSlots[i];
+            available[i].Show();
 
-            AdvertisementSpritePair randomAd =
-                advertisements[Random.Range(
-                    0, advertisements.Length
-                )];
-
-            adSlots[slotIndex].SetAdvertisement(
-                randomAd.normal,
-                randomAd.active
-            );
-
-            openAdsCount++;
+            if (available[i].IsShowing)
+                openAdsCount++;
         }
 
         Debug.Log($"Появилось реклам: {openAdsCount}");
+        if (openAdsCount == 0)
+            ScheduleNextAppearance();
     }
 
-    public void CloseAdvertisement(int slotIndex)
+    public void CloseAdvertisement(AdvertisementSlot ad)
     {
-        if (adSlots == null ||
-            slotIndex < 0 ||
-            slotIndex >= adSlots.Length)
+        if (openAdsCount <= 0)
             return;
-
-        AdvertisementSlot slot = adSlots[slotIndex];
-
-        if (slot == null || !slot.IsOccupied)
-            return;
-
-        // Очищаем слот, не удаляя объект.
-        slot.ClearAdvertisement();
 
         openAdsCount--;
 
-        if (openAdsCount <= 0)
+        if (openAdsCount == 0)
         {
             openAdsCount = 0;
             ScheduleNextAppearance();
@@ -158,12 +131,12 @@ public class AdvertismentDistraction : DistractionBase
     {
         openAdsCount = 0;
 
-        if (adSlots != null)
+        if (advertisements != null)
         {
-            foreach (AdvertisementSlot slot in adSlots)
+            foreach (AdvertisementSlot slot in advertisements)
             {
                 if (slot != null)
-                    slot.ClearAdvertisement();
+                    slot.Hide();
             }
         }
 
@@ -172,10 +145,5 @@ public class AdvertismentDistraction : DistractionBase
     public override void Resolve()
     {
         ResetAdvertisements();
-    }
-
-    public bool IsSlotOccupied(int index)
-    {
-        return adSlots != null && index >= 0 && index < adSlots.Length && adSlots[index] != null &&  adSlots[index].IsOccupied;
     }
 }

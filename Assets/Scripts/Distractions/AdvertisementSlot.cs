@@ -1,65 +1,84 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class AdvertisementSlot : MonoBehaviour
 {
+    [Header("Спрайты")]
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite activeSprite;
+
+
     [SerializeField] private AdvertismentDistraction advertisement;
     [SerializeField] private InteractionBlocker interactionBlocker;
-    [SerializeField] private MouseCameraFollow cameraFollow;
     [SerializeField] private Collider2D monitorCollider;
     [SerializeField] private Camera mainCamera;
 
-    [Header("Индекс слота")]
-    [SerializeField] private int slotIndex;
-
     [Header("Область крестика")]
-    [SerializeField] private Collider2D closeArea;
+    [SerializeField] private BoxCollider2D closeArea;
+
+    [Header("Нажатие")]
+    [SerializeField, Min(0f)]
+    private float pressDuration = 0.1f;
 
     private SpriteRenderer spriteRenderer;
-    private Sprite normalSprite;
-    private Sprite activeSprite;
+    private MouseCameraFollow cameraFollow;
 
+    private bool isShowing;
+    private bool isClosing;
+    private Coroutine closeRoutine;
+
+    public bool IsShowing => isShowing;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (mainCamera != null)
+            cameraFollow = mainCamera.GetComponent<MouseCameraFollow>();
     }
 
-    public void SetAdvertisement(Sprite normal, Sprite active)
+    public void Show()
     {
-        normalSprite = normal;
-        activeSprite = active;
+        if (normalSprite == null)
+            return;
+
+        if (closeRoutine != null)
+        {
+            StopCoroutine(closeRoutine);
+            closeRoutine = null;
+        }
+
+        isShowing = true;
+        isClosing = false;
 
         spriteRenderer.sprite = normalSprite;
     }
-
-    public void ClearAdvertisement()
+    public void Hide()
     {
-        normalSprite = null;
-        activeSprite = null;
+        if (closeRoutine != null)
+        {
+            StopCoroutine(closeRoutine);
+            closeRoutine = null;
+        }
 
-        spriteRenderer.sprite = null;
+        isShowing = false;
+        isClosing = false;
+
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = null;
     }
-
     private void Update()
     {
-        if (normalSprite == null || cameraFollow == null || monitorCollider == null || closeArea == null)
+        if (!isShowing || isClosing || mainCamera == null || cameraFollow == null || monitorCollider == null)
             return;
 
-        if (interactionBlocker != null &&
-            interactionBlocker.IsBlocked)
-        {
-            spriteRenderer.sprite = normalSprite;
+        if (interactionBlocker != null && interactionBlocker.IsBlocked)
             return;
-        }
-
 
         if (cameraFollow.FocusedTarget != monitorCollider)
-        {
-            spriteRenderer.sprite = normalSprite;
             return;
-        }
 
         Mouse mouse = Mouse.current;
 
@@ -68,23 +87,32 @@ public class AdvertisementSlot : MonoBehaviour
 
         Vector2 cursor = mouse.position.ReadValue();
 
+        if (!mainCamera.pixelRect.Contains(cursor))
+            return;
+
         Vector2 worldPoint = mainCamera.ScreenToWorldPoint(cursor);
 
-        bool hovering =mainCamera.pixelRect.Contains(cursor) && closeArea.isActiveAndEnabled && closeArea.OverlapPoint(worldPoint);
+        bool overClose = closeArea.isActiveAndEnabled && closeArea.OverlapPoint(worldPoint);
 
-        if (hovering)
+        if (overClose && mouse.leftButton.wasPressedThisFrame)
         {
-            spriteRenderer.sprite = activeSprite != null ? activeSprite : normalSprite;
-
-            if (mouse.leftButton.wasPressedThisFrame)
-                advertisement.CloseAdvertisement(slotIndex);
-        }
-        else
-        {
-            spriteRenderer.sprite = normalSprite;
+            closeRoutine = StartCoroutine(CloseSequence());
         }
     }
 
-    public bool IsOccupied => normalSprite != null;
+    private IEnumerator CloseSequence()
+    {
+        isClosing = true;
+
+        if (activeSprite != null)
+            spriteRenderer.sprite = activeSprite;
+
+        yield return new WaitForSeconds(pressDuration);
+
+        if (advertisement != null)
+            advertisement.CloseAdvertisement(this);
+
+        Hide();
+    }
 
 }

@@ -17,7 +17,7 @@ public sealed class PhoneDistraction : DistractionBase
     [SerializeField, Min(0)] private float watchTime = 2f;
     [SerializeField, Min(0)] private float stuckAfter = 8f;
     [SerializeField, Min(0)] private float focusPerSecond = 1f;
-    [SerializeField, Min(0)] private float reward = 10f;
+    [SerializeField, Min(0)] private float stressReward = 20f;
 
     private int remainingMemes;
     private float elapsed;
@@ -55,7 +55,7 @@ public sealed class PhoneDistraction : DistractionBase
         if (IsActive && remainingMemes == 0 && cardElapsed >= watchTime)
         {
             Resolve();
-            Game.ApplyResourceChanges(reward, 0f);
+            Game.ApplyResourceChanges(0f, -stressReward);
         }
     }
     public void Swipe()
