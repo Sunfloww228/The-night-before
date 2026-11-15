@@ -14,9 +14,7 @@ public class CourierDistraction : DistractionBase
     [SerializeField] private float urgentRingInterval = 2f;
     [SerializeField] private float urgentAfter = 10f;
 
-    //[SerializeField] private PlayerController player;
-    //[SerializeField] private Transform exitPoint;
-    //[SerializeField] private float deliveryDelay = 1f;
+    [SerializeField] private Student student;
 
     [SerializeField] private GameObject pizzaObject;
 
@@ -178,6 +176,10 @@ public class CourierDistraction : DistractionBase
             return;
 
         interactionBlocker.Block(this);
+
+        if (student != null)
+            student.PlayCourier();
+
         courierWaiting = false;
         delivering = true;
 
@@ -198,16 +200,16 @@ public class CourierDistraction : DistractionBase
 
     private IEnumerator DeliverySequence()
     {
-        //if (player != null && exitPoint != null)
-        //{
-        //    yield return player.GoToAndReturn(
-        //        exitPoint, deliveryDelay);
-        //}
+        if (student != null)
+            student.PlayCourier();
 
         yield return new WaitForSeconds(deliveryTimeCost);
 
         if (Game == null || !Game.IsPlaying)
             yield break;
+
+        if (student != null)
+            student.PlaySitting();
 
         pizzaReady = true;
         delivering = false;

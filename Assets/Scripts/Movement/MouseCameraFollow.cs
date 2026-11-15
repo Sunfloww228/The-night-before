@@ -7,6 +7,7 @@ public class MouseCameraFollow : MonoBehaviour
     [SerializeField] private InteractionBlocker interactionBlocker;
     [SerializeField] private BlackPanelController blackout;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Student student;
 
     [Header("Background")]
     [SerializeField] private SpriteRenderer background;
@@ -191,6 +192,11 @@ public class MouseCameraFollow : MonoBehaviour
         );
 
         transform.position = position;
+
+        if (student != null)
+        {
+            student.SetVisible(focusedTarget == null);
+        }
     }
 
     private void SetFocus(Collider2D target)

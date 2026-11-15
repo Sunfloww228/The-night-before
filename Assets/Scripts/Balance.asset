@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Balance
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
   durationSeconds: 120
-  startingFocus: 67
+  startingFocus: 50.8
   startingStress: 0
-  workStressPerSecond: 5
+  workStressPerSecond: 2
   stressDamageThreshold: 37.2
   stressDamageFactor: 0.2
   flowThreshold: 80
   normalThreshold: 50
-  anxietyThreshold: 20
+  anxietyThreshold: 27
   flowMultiplier: 2
   normalMultiplier: 1
   anxietyMultiplier: 0.5

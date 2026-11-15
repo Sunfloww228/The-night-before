@@ -9,6 +9,8 @@ public class NeighbourDistraction : DistractionBase
     [SerializeField] private AudioSource neighbourAudio;
     [SerializeField] private AudioSource knockingAudio;
 
+    [SerializeField] private Student student;
+
     [SerializeField] private float minAppearTime = 20f;
     [SerializeField] private float maxAppearTime = 50f;
     [SerializeField] private float waitTime = 20f;
@@ -185,30 +187,22 @@ public class NeighbourDistraction : DistractionBase
 
     private IEnumerator WalkingSequence()
     {
-        float startTime = Time.time;
+        if (student != null)
+            student.PlayNeighbour();
 
-        float knockDuration = 0.5f;
+        float timeBeforeKnock = walkingTimeCost * 0.4f;
 
-        if (knockingAudio != null &&
-            knockingAudio.clip != null)
-        {
-            knockDuration = knockingAudio.clip.length;
-        }
+        yield return new WaitForSeconds(timeBeforeKnock);
 
-        // Персонаж идёт к батарее.
-        // Когда доходит — звучит стук.
-        //// Затем персонаж возвращается.
-        //yield return player.GoToAndReturn(
-        //    batteryPoint,
-        //    knockDuration,
-        //    PlayKnocking
-        //);
+        if (Game == null || !Game.IsPlaying)
+            yield break;
 
-        float elapsed = Time.time - startTime;
-        float remaining = walkingTimeCost - elapsed;
+        PlayKnocking();
 
-        if (remaining > 0f)
-            yield return new WaitForSeconds(remaining);
+        float remainingTime = walkingTimeCost - timeBeforeKnock;
+
+        if (remainingTime > 0f)
+            yield return new WaitForSeconds(remainingTime);
 
         if (Game == null || !Game.IsPlaying)
             yield break;
@@ -216,8 +210,10 @@ public class NeighbourDistraction : DistractionBase
         walking = false;
         walkingRoutine = null;
 
-        blackout.End(this);
-        interactionBlocker.Unblock(this);
+        if (blackout != null)
+            blackout.End(this);
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
         Game.SetWorkBlocked(this, false);
 
         Debug.Log("Игрок вернулся. Соседи затихли.");
@@ -227,8 +223,7 @@ public class NeighbourDistraction : DistractionBase
 
     private void PlayKnocking()
     {
-        if (knockingAudio != null &&
-            knockingAudio.clip != null)
+        if (knockingAudio != null && knockingAudio.clip != null)
         {
             knockingAudio.Play();
         }
