@@ -30,6 +30,7 @@ public class CourierDistraction : DistractionBase
     [Header("сходить за пиццей время")]
     [SerializeField] private float deliveryTimeCost = 5f;
     [SerializeField] private BlackPanelController blackout;
+    [SerializeField] private InteractionBlocker interactionBlocker;
 
     private float appearTimer;
     private float waitTimer;
@@ -66,6 +67,18 @@ public class CourierDistraction : DistractionBase
 
         if (pizzaObject != null)
             pizzaObject.SetActive(false);
+
+        if (bellAudio != null)
+            bellAudio.Stop();
+
+        if (blackout != null)
+            blackout.End(this);
+
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
+
+        if (Game != null)
+            Game.SetWorkBlocked(this, false);
     }
 
     public override void Tick(float dt)
@@ -147,18 +160,24 @@ public class CourierDistraction : DistractionBase
         {
             bellIcon.SetActive(false);
         }
+        if (bellAudio != null)
+            bellAudio.Stop();
 
         Game.ApplyResourceChanges(-missedCourierFocusPenalty, missedCourierStressPenalty);
 
-
+        FinishIfPossible();
         Debug.Log("Курьер ушёл.");
     }
 
     public void AnswerDoor() 
     {
-        if (!courierWaiting || delivering)
+        if (!courierWaiting || delivering || Game == null || !Game.IsPlaying)
             return;
 
+        if (interactionBlocker == null || interactionBlocker.IsBlocked || blackout == null || !blackout.TryBegin(this))
+            return;
+
+        interactionBlocker.Block(this);
         courierWaiting = false;
         delivering = true;
 
@@ -170,9 +189,6 @@ public class CourierDistraction : DistractionBase
         {
             bellAudio.Stop();
         }
-
-        if (!blackout.TryBegin(this))
-            return;
 
         Game.SetWorkBlocked(this, true);
 
@@ -190,7 +206,6 @@ public class CourierDistraction : DistractionBase
 
         yield return new WaitForSeconds(deliveryTimeCost);
 
-        // Если игра закончилась во время ожидания
         if (Game == null || !Game.IsPlaying)
             yield break;
 
@@ -201,7 +216,10 @@ public class CourierDistraction : DistractionBase
 
         if (pizzaObject != null)
             pizzaObject.SetActive(true);
-        blackout.End(this);
+        if (blackout != null)
+            blackout.End(this);
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
         Game.SetWorkBlocked(this, false);
         Debug.Log("Игрок получил пиццу!");
     }
@@ -244,7 +262,11 @@ public class CourierDistraction : DistractionBase
         if (pizzaObject != null)
             pizzaObject.SetActive(false);
 
-        blackout.End(this);
+        if (blackout != null)
+            blackout.End(this);
+
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
 
         if (Game != null)
             Game.SetWorkBlocked(this, false);

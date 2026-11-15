@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public enum InteractionType 
 {
@@ -10,7 +9,7 @@ public enum InteractionType
 
 public class CourierInteraction : MonoBehaviour
 {
-    [SerializeField] private BlackPanelController blackout;
+    [SerializeField] private InteractionBlocker interactionBlocker;
     [SerializeField] private CourierDistraction courier;
     [SerializeField] private InteractionType interactionType;
     [SerializeField] private Camera mainCamera;
@@ -48,15 +47,15 @@ public class CourierInteraction : MonoBehaviour
             hitArea == null)
             return;
 
-        if (gameManager == null ||
-             !gameManager.IsPlaying ||
-             !courier.IsCourierWaiting ||
-             (blackout != null && blackout.IsBusy))
+        if (gameManager == null || !gameManager.IsPlaying || (interactionBlocker != null && interactionBlocker.IsBlocked))
         {
             ResetHover();
 
-            if (cameraFollow != null)
+            if (cameraFollow != null &&
+                cameraFollow.FocusedTarget == hitArea)
+            {
                 cameraFollow.ReleaseFocus(hitArea);
+            }
 
             return;
         }

@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera))]
 public class MouseCameraFollow : MonoBehaviour
 {
+    [SerializeField] private InteractionBlocker interactionBlocker;
+    [SerializeField] private BlackPanelController blackout;
     [SerializeField] private GameManager gameManager;
 
     [Header("Background")]
@@ -62,8 +64,6 @@ public class MouseCameraFollow : MonoBehaviour
         float sizeByHeight = backgroundHeight / 1.5f;
         float sizeByWidth = backgroundWidth / (1.5f * cam.aspect);
 
-        // Берём меньший размер, чтобы камера могла
-        // перемещаться по фону.
         normalSize = Mathf.Min(sizeByHeight, sizeByWidth) * 0.7f;
         cam.orthographicSize = normalSize;
     }
@@ -97,22 +97,30 @@ public class MouseCameraFollow : MonoBehaviour
 
         Vector2 worldPoint = (Vector2)cam.ScreenToWorldPoint(cursor);
         bool pointerInside = mouse != null && viewport.Contains(cursor);
-        if (releasedTarget != null &&
-    (!pointerInside ||
-     !IsPointerOver(releasedTarget, worldPoint)))
+        if (releasedTarget != null && (!pointerInside || !IsPointerOver(releasedTarget, worldPoint)))
         {
             releasedTarget = null;
         }
-
-        // Если объект исчез или выключился — снимаем фокус.
         if (focusedTarget != null &&
             !focusedTarget.isActiveAndEnabled)
         {
             ReleaseFocus(focusedTarget);
         }
 
-        // Правая кнопка снимает фокус.
-        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
+        if (blackout != null && blackout.IsBusy)
+        {
+            if (focusedTarget != null)
+                ReleaseFocus(focusedTarget);
+
+            hoveredTarget = null;
+            hoverTimer = 0f;
+        }
+        else if (interactionBlocker != null && interactionBlocker.IsBlocked)
+        {
+            hoveredTarget = null;
+            hoverTimer = 0f;
+        }
+        else if (mouse != null && mouse.rightButton.wasPressedThisFrame)
         {
             ReleaseFocus(focusedTarget);
 

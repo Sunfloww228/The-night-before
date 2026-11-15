@@ -4,25 +4,23 @@ using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour
 {
-
     [SerializeField] private GameBalance balance;
     [SerializeField] private bool startAutomatically = true;
 
+    [SerializeField] private MouseCameraFollow cameraFollow;
+    [SerializeField] private Collider2D monitor;
+
     private bool workBlocked;
-    // Each distraction releases only its own block.
     private readonly HashSet<MonoBehaviour> workBlockers = new HashSet<MonoBehaviour>();
 
     public event Action SessionRestarting;
 
     public GameState State { get; } = new GameState();
-
-    // GameState остаётся единственным источником времени и статуса.
     public float TimeLeft => State.RemainingTime;
     public bool IsPlaying => State.Status == GameStatus.Running;
 
     public event Action<GameStatus> SessionEnded;
 
-    // Уведомления для таймера и экрана результата.
     public event Action OnTimeChanged;
     public event Action<bool> OnGameFinished;
 
@@ -94,7 +92,9 @@ public sealed class GameManager : MonoBehaviour
         float stress = State.Stress;
         float progress = State.Progress;
 
-        if (!workBlocked && workBlockers.Count == 0 && stress < GameState.ResourceMax)
+        bool isLookingAtMonitor = cameraFollow != null && monitor != null && cameraFollow.FocusedTarget == monitor;
+
+        if (isLookingAtMonitor && !workBlocked && workBlockers.Count == 0 && stress < GameState.ResourceMax)
         {
             progress += balance.BaseProgressPerSecond * balance.GetWorkMultiplier(State.Focus) * step;
             stress = Mathf.Min(GameState.ResourceMax, stress + balance.WorkStressPerSecond * step);
@@ -120,7 +120,6 @@ public sealed class GameManager : MonoBehaviour
         else if (remainingTime <= 0f)
             status = GameStatus.DeadlineExpired;
 
-        // Сначала публикуем полное состояние, затем обновляем таймер и результат.
         bool timeChanged = TimeLeft != remainingTime;
         State.Set(focus, stress, progress, remainingTime, status);
         if (timeChanged)

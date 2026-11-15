@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class CoffeeInteraction : MonoBehaviour
 {
-    [SerializeField] private BlackPanelController blackout;
+    [SerializeField] private InteractionBlocker interactionBlocker;
     [SerializeField] private Camera interactionCamera;
     [SerializeField] private CoffeeDistraction coffee;
     [SerializeField] private Color hoverTint = new Color(0.75f, 0.9f, 1f);
@@ -28,20 +28,6 @@ public class CoffeeInteraction : MonoBehaviour
         if (coffee == null || interactionCamera == null)
             return;
 
-
-        if (blackout != null && blackout.IsBusy)
-        {
-            cupSprite.color = originalTint;
-
-            if (cameraFollow != null &&
-                cameraFollow.FocusedTarget == hitArea)
-            {
-                cameraFollow.ReleaseFocus(hitArea);
-            }
-
-            return;
-        }
-
         Mouse mouse = Mouse.current;
 
         bool cancel = mouse != null &&
@@ -56,37 +42,36 @@ public class CoffeeInteraction : MonoBehaviour
             cameraFollow.ReleaseFocus(hitArea);
         }
 
+        panelWasOpen = coffee.IsMachineOpen;
+
+        if (interactionBlocker != null && interactionBlocker.IsBlocked)
+        {
+            cupSprite.color = originalTint;
+            return;
+        }
+
         bool hovering = false;
 
-        if (mouse != null && !coffee.IsMachineOpen &&
-            !panelWasOpen && !cancel)
+        if (mouse != null && !coffee.IsMachineOpen && !panelWasOpen && !cancel)
         {
             Vector2 cursor = mouse.position.ReadValue();
 
-            Vector2 worldPoint =
-                interactionCamera.ScreenToWorldPoint(cursor);
+            Vector2 worldPoint =interactionCamera.ScreenToWorldPoint(cursor);
 
             Bounds bounds = cupSprite.bounds;
 
-            bool overCollider =
-                hitArea.isActiveAndEnabled &&
-                hitArea.OverlapPoint(worldPoint);
+            bool overCollider = hitArea.isActiveAndEnabled && hitArea.OverlapPoint(worldPoint);
 
-            bool overSprite =
-                cupSprite.enabled &&
-                cupSprite.sprite != null &&
-                bounds.Contains(new Vector3(
+            bool overSprite = cupSprite.enabled && cupSprite.sprite != null && bounds.Contains
+                (new Vector3(
                     worldPoint.x,
                     worldPoint.y,
                     bounds.center.z
                 ));
 
-            hovering =
-                interactionCamera.pixelRect.Contains(cursor) &&
-                (overCollider || overSprite);
+            hovering = interactionCamera.pixelRect.Contains(cursor) && (overCollider || overSprite);
 
-            if (hovering &&
-                mouse.leftButton.wasPressedThisFrame)
+            if (hovering && mouse.leftButton.wasPressedThisFrame)
             {
                 Debug.Log("Cup clicked!");
                 coffee.Interact();
@@ -96,10 +81,7 @@ public class CoffeeInteraction : MonoBehaviour
 
         panelWasOpen = coffee.IsMachineOpen;
 
-        cupSprite.color =
-            hovering && !panelWasOpen
-                ? originalTint * hoverTint
-                : originalTint;
+        cupSprite.color = hovering && !panelWasOpen ? originalTint * hoverTint : originalTint;
     }
 
     private void OnDisable()

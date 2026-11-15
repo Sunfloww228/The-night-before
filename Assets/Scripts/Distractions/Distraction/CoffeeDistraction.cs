@@ -24,6 +24,8 @@ public sealed class CoffeeDistraction : DistractionBase
     [SerializeField, Min(0)] private float coolReward = 5f;
     [SerializeField, Min(0)] private float crashFocusCost = 10f;
 
+    [SerializeField] private InteractionBlocker interactionBlocker;
+
     //[SerializeField] private Animator groundsAnimator;
 
 
@@ -66,6 +68,9 @@ public sealed class CoffeeDistraction : DistractionBase
         if (!CanActivate() || cupReady || cupOnTable || machineOpen)
             return;
 
+        if (interactionBlocker != null && interactionBlocker.IsBlocked)
+            return;
+
         machineOpen = true;
         groundsAdded = false;
         holding = false;
@@ -73,6 +78,9 @@ public sealed class CoffeeDistraction : DistractionBase
 
         if (!IsActive)
             base.Activate();
+
+        if (interactionBlocker != null)
+            interactionBlocker.Block(this);
         if (coffeeGroundsPanel != null)
             coffeeGroundsPanel.SetActive(true);
         if (coffeeMakingPanel != null)
@@ -141,12 +149,13 @@ public sealed class CoffeeDistraction : DistractionBase
 
         UpdateTableCup();
 
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
         ResolveIfIdle();
     }
 
     public void CloseMachine()
     {
-        Debug.LogWarning("CloseMachine вызван\n" + System.Environment.StackTrace);
         machineOpen = false;
         groundsAdded = false;
         cupReady = false;
@@ -159,6 +168,9 @@ public sealed class CoffeeDistraction : DistractionBase
 
         if (takeCupButton != null)
             takeCupButton.interactable = false;
+
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
         ResolveIfIdle();
     }
 
@@ -229,6 +241,8 @@ public sealed class CoffeeDistraction : DistractionBase
         if (takeCupButton != null)
             takeCupButton.interactable = false;
         UpdateTableCup();
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
         base.Resolve();
     }
 

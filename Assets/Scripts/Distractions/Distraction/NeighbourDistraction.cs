@@ -3,6 +3,7 @@ using System.Collections;
 
 public class NeighbourDistraction : DistractionBase
 {
+    [SerializeField] private InteractionBlocker interactionBlocker;
     [SerializeField] private BlackPanelController blackout;
     [SerializeField] private GameObject neighbourIcon;
     [SerializeField] private AudioSource neighbourAudio;
@@ -48,6 +49,7 @@ public class NeighbourDistraction : DistractionBase
 
         if (neighbourIcon != null)
             neighbourIcon.SetActive(false);
+
         if (neighbourAudio != null)
             neighbourAudio.Stop();
 
@@ -56,6 +58,9 @@ public class NeighbourDistraction : DistractionBase
 
         if (blackout != null)
             blackout.End(this);
+
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
 
         if (Game != null)
             Game.SetWorkBlocked(this, false);
@@ -159,8 +164,10 @@ public class NeighbourDistraction : DistractionBase
         //    return;
         //}
 
-        if (!blackout.TryBegin(this))
+        if (interactionBlocker == null || interactionBlocker.IsBlocked || blackout == null || !blackout.TryBegin(this))
             return;
+
+        interactionBlocker.Block(this);
 
         neighbourWaiting = false;
         walking = true;
@@ -210,6 +217,7 @@ public class NeighbourDistraction : DistractionBase
         walkingRoutine = null;
 
         blackout.End(this);
+        interactionBlocker.Unblock(this);
         Game.SetWorkBlocked(this, false);
 
         Debug.Log("Игрок вернулся. Соседи затихли.");
@@ -251,7 +259,6 @@ public class NeighbourDistraction : DistractionBase
     }
     public override void Resolve()
     {
-        // Останавливаем поход к батарее
         StopWalking();
 
         ResetNeighbour();

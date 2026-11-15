@@ -9,6 +9,7 @@ public sealed class PhoneDistraction : DistractionBase
     [SerializeField] private Image display;
     [SerializeField] private Sprite[] memes;
     [SerializeField] private Sprite motivationalCard;
+    [SerializeField] private InteractionBlocker interactionBlocker;
 
     [SerializeField, Min(1)] private int minMemes = 2;
     [SerializeField, Min(1)] private int maxMemes = 5;
@@ -27,12 +28,16 @@ public sealed class PhoneDistraction : DistractionBase
         if (IsActive || !CanActivate())
             return;
 
+        if (interactionBlocker != null && interactionBlocker.IsBlocked)
+            return;
         remainingMemes = Random.Range(minMemes, Mathf.Max(minMemes, maxMemes) + 1);
         elapsed = 0f;
         ShowCard();
         base.Activate();
         if (telephonePanel != null)
             telephonePanel.SetActive(true);
+        if (interactionBlocker != null)
+            interactionBlocker.Block(this);
         Game.SetWorkBlocked(this, true);
 
     }
@@ -53,8 +58,6 @@ public sealed class PhoneDistraction : DistractionBase
             Game.ApplyResourceChanges(reward, 0f);
         }
     }
-
-
     public void Swipe()
     {
         if (!IsActive || remainingMemes == 0 || cardElapsed < swipeCooldown)
@@ -66,6 +69,8 @@ public sealed class PhoneDistraction : DistractionBase
 
     public override void Resolve()
     {
+        if (interactionBlocker != null)
+            interactionBlocker.Unblock(this);
         if (Game != null)
             Game.SetWorkBlocked(this, false);
 
