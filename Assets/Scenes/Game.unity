@@ -2737,10 +2737,10 @@ RectTransform:
   - {fileID: 1734937300}
   m_Father: {fileID: 488077341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23, y: 409}
-  m_SizeDelta: {x: 687.7324, y: 94.9437}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 23, y: 359}
+  m_SizeDelta: {x: 687.7324, y: 94.943695}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &639832121
 MonoBehaviour:
@@ -2882,6 +2882,9 @@ MonoBehaviour:
   - {fileID: -3979644227304878831, guid: 2c4a48402a0159e48a6a96bb10e1b920, type: 3}
   - {fileID: -5656990345241175679, guid: cfd960719f65fe642bd87300115b3508, type: 3}
   - {fileID: -8207844280621378773, guid: e6508c3b2f1354c49b62202b4201151e, type: 3}
+  - {fileID: -6065247130837470248, guid: a2ab1669df589f844adcb0eba7f46635, type: 3}
+  - {fileID: 3538867272787125989, guid: 60fafdd446132944d90edc3693c9ec46, type: 3}
+  - {fileID: -8849950898758233520, guid: 150678622e97dee4f94913ada84a5d17, type: 3}
   motivationalCard: {fileID: 5175269579225648062, guid: 833df036f1460d4479a9b59bc72fef5b, type: 3}
   interactionBlocker: {fileID: 99789489}
   minMemes: 2
@@ -4796,10 +4799,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
