@@ -69,7 +69,10 @@ public class MouseCameraFollow : MonoBehaviour
         Vector2 center = bounds.center;
         Vector2 normalExtents = new Vector2(normalSize * cam.aspect, normalSize);
         Vector2 normalRange = GetPanRange(bounds, normalExtents);
-        Vector2 normalPosition = center + Vector2.Scale(normalRange, offset);
+        Vector2 panOffset = offset * MenuSettings.MouseSensitivity;
+        panOffset.x = Mathf.Clamp(panOffset.x, -1f, 1f);
+        panOffset.y = Mathf.Clamp(panOffset.y, -1f, 1f);
+        Vector2 normalPosition = center + Vector2.Scale(normalRange, panOffset);
 
         Vector2 worldPoint = (Vector2)cam.ScreenToWorldPoint(cursor);
         bool pointerInside = mouse != null && viewport.Contains(cursor);
