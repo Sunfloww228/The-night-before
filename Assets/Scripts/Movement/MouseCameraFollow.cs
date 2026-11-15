@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera))]
 public class MouseCameraFollow : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
+
     [Header("Background")]
     [SerializeField] private SpriteRenderer background;
 
@@ -52,6 +54,9 @@ public class MouseCameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (gameManager == null || !gameManager.IsPlaying)
+            return;
+
         if (background == null || !cam.orthographic)
             return;
 
