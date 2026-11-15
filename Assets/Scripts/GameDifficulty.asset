@@ -19,6 +19,18 @@ MonoBehaviour:
     hotReward: 25
     coolReward: 12
     crashFocusCost: 5
+  - brewTime: 2
+    coolTime: 15
+    crashDelay: 20
+    hotReward: 20
+    coolReward: 8
+    crashFocusCost: 10
+  - brewTime: 2
+    coolTime: 10
+    crashDelay: 15
+    hotReward: 15
+    coolReward: 5
+    crashFocusCost: 15
   phone:
   - minMemes: 2
     maxMemes: 3
@@ -27,10 +39,24 @@ MonoBehaviour:
     stuckAfter: 12
     focusPerSecond: 1
     stressReward: 25
+  - minMemes: 2
+    maxMemes: 4
+    swipeCooldown: 1
+    watchTime: 2
+    stuckAfter: 8
+    focusPerSecond: 1
+    stressReward: 20
+  - minMemes: 3
+    maxMemes: 5
+    swipeCooldown: 1
+    watchTime: 2
+    stuckAfter: 6
+    focusPerSecond: 1
+    stressReward: 15
   courier:
   - minAppearTime: 12
     maxAppearTime: 22
-    waitTime: 25
+    waitTime: 12
     normalRingInterval: 6
     urgentRingInterval: 2.5
     urgentAfter: 15
@@ -39,16 +65,60 @@ MonoBehaviour:
     pizzaStressReduction: 25
     missedCourierFocusPenalty: 10
     missedCourierStressPenalty: 10
+  - minAppearTime: 15
+    maxAppearTime: 30
+    waitTime: 8
+    normalRingInterval: 5
+    urgentRingInterval: 1.5
+    urgentAfter: 10
+    ringingFocusLoss: 2.5
+    pizzaFocusReward: 25
+    pizzaStressReduction: 20
+    missedCourierFocusPenalty: 15
+    missedCourierStressPenalty: 15
+  - minAppearTime: 15
+    maxAppearTime: 35
+    waitTime: 5
+    normalRingInterval: 4
+    urgentRingInterval: 1
+    urgentAfter: 7
+    ringingFocusLoss: 3
+    pizzaFocusReward: 20
+    pizzaStressReduction: 15
+    missedCourierFocusPenalty: 20
+    missedCourierStressPenalty: 20
   advertisement:
   - minAppearTime: 35
     maxAppearTime: 50
     minAds: 1
     maxAds: 2
     focusLossPerSecond: 1
+  - minAppearTime: 15
+    maxAppearTime: 25
+    minAds: 1
+    maxAds: 3
+    focusLossPerSecond: 2
+  - minAppearTime: 5
+    maxAppearTime: 15
+    minAds: 2
+    maxAds: 3
+    focusLossPerSecond: 3
   neighbour:
-  - minAppearTime: 40
-    maxAppearTime: 60
-    waitTime: 12
+  - minAppearTime: 20
+    maxAppearTime: 30
+    waitTime: 7
     normalAudioInterval: 7
     focusLoss: 0.5
     stressPenalty: 0.5
+  - minAppearTime: 15
+    maxAppearTime: 25
+    waitTime: 10
+    normalAudioInterval: 5
+    focusLoss: 1.5
+    stressPenalty: 1.5
+  - minAppearTime: 10
+    maxAppearTime: 20
+    waitTime: 15
+    normalAudioInterval: 7
+    focusLoss: 2.5
+    stressPenalty: 2.5
