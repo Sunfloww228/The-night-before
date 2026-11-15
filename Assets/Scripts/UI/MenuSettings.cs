@@ -6,6 +6,11 @@ public sealed class MenuSettings : MonoBehaviour
     private const string VolumeKey = "MasterVolume";
     private const string SensitivityKey = "MouseSensitivity";
 
+    private const float DefaultVolume = 1f;
+    private const float DefaultSensitivity = 1f;
+    private const float MinSensitivity = 0.5f;
+    private const float MaxSensitivity = 2.5f;
+
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Slider sensitivitySlider;
 
@@ -14,16 +19,38 @@ public sealed class MenuSettings : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void LoadSettings()
     {
-        AudioListener.volume = Mathf.Clamp01(PlayerPrefs.GetFloat(VolumeKey, 1f));
-        MouseSensitivity = Mathf.Clamp(PlayerPrefs.GetFloat(SensitivityKey, 1f), 0.5f, 2f);
+        AudioListener.volume = Mathf.Clamp01(
+            PlayerPrefs.GetFloat(VolumeKey, DefaultVolume)
+        );
+
+        MouseSensitivity = Mathf.Clamp(
+            PlayerPrefs.GetFloat(SensitivityKey, DefaultSensitivity),
+            MinSensitivity,
+            MaxSensitivity
+        );
     }
 
     private void OnEnable()
     {
         if (volumeSlider != null)
+        {
             volumeSlider.SetValueWithoutNotify(AudioListener.volume);
+            volumeSlider.onValueChanged.AddListener(SetVolume);
+        }
         if (sensitivitySlider != null)
+        {
             sensitivitySlider.SetValueWithoutNotify(MouseSensitivity);
+            sensitivitySlider.onValueChanged.AddListener(SetMouseSensitivity);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (volumeSlider != null)
+            volumeSlider.onValueChanged.RemoveListener(SetVolume);
+
+        if (sensitivitySlider != null)
+            sensitivitySlider.onValueChanged.RemoveListener(SetMouseSensitivity);
     }
 
     public void SetVolume(float value)
@@ -42,6 +69,10 @@ public sealed class MenuSettings : MonoBehaviour
         PlayerPrefs.SetFloat(SensitivityKey, MouseSensitivity);
         PlayerPrefs.Save();
 
-        Debug.Log("Настройки сохранены!");
+        Debug.Log(
+            $"Настройки сохранены: " +
+            $"громкость = {AudioListener.volume}, " +
+            $"чувствительность = {MouseSensitivity}"
+        );
     }
 }

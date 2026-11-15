@@ -29,6 +29,8 @@ public sealed class GameManager : MonoBehaviour
 
     private void Start()
     {
+        AudioListener.volume = 1f;
+
         if (startAutomatically && State.Status == GameStatus.Idle)
             StartSession();
     }
@@ -102,7 +104,6 @@ public sealed class GameManager : MonoBehaviour
         Commit(focus, stress, progress, State.RemainingTime - step);
     }
 
-    // Ручная проверка использует те же правила, что и Update.
     public void CheckGameOver()
     {
         if (IsPlaying)
