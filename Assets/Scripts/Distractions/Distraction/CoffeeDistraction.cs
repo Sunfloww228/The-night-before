@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +25,18 @@ public sealed class CoffeeDistraction : DistractionBase
     [SerializeField, Min(0)] private float coolReward = 5f;
     [SerializeField, Min(0)] private float crashFocusCost = 10f;
 
-    //[SerializeField] private Animator groundsAnimator;
+    [Header("Animations")]
+    [SerializeField] private Animator groundsAnimator;
+    [SerializeField] private Animator brewingAnimator;
+    [SerializeField] private Image coffeeMachineImage;
+
+    private Sprite idleMachineSprite;
+
+    private void ShowStaticMachine()
+    {
+        brewingAnimator.enabled = false;
+        coffeeMachineImage.sprite = idleMachineSprite;
+    }
 
 
     private readonly List<float> crashDeadlines = new List<float>();
@@ -36,7 +48,7 @@ public sealed class CoffeeDistraction : DistractionBase
     private float cooledAt;
     private bool cupOnTable;
 
-    //private bool groundsAnimating;
+    private bool groundsAnimating;
 
     public void Interact()
     {
@@ -63,18 +75,27 @@ public sealed class CoffeeDistraction : DistractionBase
 
     public override void Activate()
     {
+        idleMachineSprite = coffeeMachineImage.sprite;
+        ShowStaticMachine();
+
         if (!CanActivate() || cupReady || cupOnTable || machineOpen)
             return;
 
+        Debug.Log("Проверка пройдена");
+
         machineOpen = true;
         groundsAdded = false;
+        groundsAnimating = false;
         holding = false;
         brewElapsed = 0f;
 
         if (!IsActive)
             base.Activate();
         if (coffeeGroundsPanel != null)
+        {
             coffeeGroundsPanel.SetActive(true);
+            groundsAnimator.Play("GroundsIdle", 0, 0f);
+        }
         if (coffeeMakingPanel != null)
             coffeeMakingPanel.SetActive(false);
         if (takeCupButton != null)
@@ -82,29 +103,43 @@ public sealed class CoffeeDistraction : DistractionBase
     }
 
 
-    public void AddGrounds()  //мешочек с кофе
+    public void AddGrounds()
     {
-        if (!machineOpen || groundsAdded)
-            return;
-        groundsAdded = true;
-        //анимация        насыпания
+        Debug.Log($"Клик по мешочку: machineOpen={machineOpen}, " +
+                  $"groundsAdded={groundsAdded}, groundsAnimating={groundsAnimating}", this);
 
-        //groundsAnimating = true;
-        //groundsAnimator.SetTrigger("PourGrounds");
+        if (!machineOpen || groundsAdded || groundsAnimating)
+            return;
+
+        if (groundsAnimator == null || !groundsAnimator.isActiveAndEnabled)
+        {
+            Debug.LogError("Grounds Animator не назначен, выключен или его объект скрыт.", this);
+            return;
+        }
+
+        int pourGroundsState = Animator.StringToHash("Base Layer.PourGrounds");
+
+        if (!groundsAnimator.HasState(0, pourGroundsState))
+        {
+            Debug.LogError("В Animator мешочка нет состояния Base Layer.PourGrounds.", this);
+            return;
+        }
+
+        groundsAnimating = true;
+        groundsAnimator.Play(pourGroundsState, 0, 0f);
+    }
+
+    public void FinishAddingGrounds()
+    {
+        if (!machineOpen || !groundsAnimating)
+            return;
+
+        groundsAnimating = false;
+        groundsAdded = true;
+
         coffeeGroundsPanel.SetActive(false);
         coffeeMakingPanel.SetActive(true);
     }
-    //public void FinishAddingGrounds()
-    //{
-    //    if (!machineOpen || !groundsAnimating)
-    //        return;
-
-    //    groundsAnimating = false;
-    //    groundsAdded = true;
-
-    //    coffeeGroundsPanel.SetActive(false);
-    //    coffeeMakingPanel.SetActive(true);
-    //}
 
     public void BeginBrew()    //кнопка включить машину
     {
@@ -114,12 +149,20 @@ public sealed class CoffeeDistraction : DistractionBase
         holding = true;
         brewElapsed = 0f;
         Game.SetWorkBlocked(this, true);
+        brewingAnimator.enabled = true;
+        brewingAnimator.Play("PourCoffee", 0, 0f);
     }
 
     public void EndBrew()
     {
+        bool wasHolding = holding;
+
         holding = false;
         brewElapsed = 0f;
+
+        if (wasHolding)
+            ShowStaticMachine();
+
         if (Game != null)
             Game.SetWorkBlocked(this, false);
     }
@@ -156,6 +199,7 @@ public sealed class CoffeeDistraction : DistractionBase
             coffeeMakingPanel.SetActive(false);
         if (coffeeGroundsPanel != null)
             coffeeGroundsPanel.SetActive(false);
+            groundsAnimating = false;
 
         if (takeCupButton != null)
             takeCupButton.interactable = false;
@@ -226,6 +270,7 @@ public sealed class CoffeeDistraction : DistractionBase
             coffeeMakingPanel.SetActive(false);
         if (coffeeGroundsPanel != null)
             coffeeGroundsPanel.SetActive(false);
+            groundsAnimating = false;
         if (takeCupButton != null)
             takeCupButton.interactable = false;
         UpdateTableCup();
