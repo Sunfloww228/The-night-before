@@ -9,6 +9,7 @@ public class Student : MonoBehaviour
     [SerializeField] private SpriteRenderer studentSprite;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Sprite sittingSprite;
+    [SerializeField] private FocusBulb focusBulb;
     [SerializeField] private Camera sceneCamera;
     [SerializeField] private Sprite[] departureFrames;
     [SerializeField] private Vector2[] departureOffsets;
@@ -51,6 +52,8 @@ public class Student : MonoBehaviour
     {
         this.visible = visible;
         studentSprite.enabled = visible && !away;
+        if (focusBulb != null)
+            focusBulb.SetShowInHead(studentSprite.enabled && departure == null);
     }
 
     public void PlaySitting()
@@ -84,6 +87,7 @@ public class Student : MonoBehaviour
             return;
 
         departure = StartCoroutine(DepartureSequence(toLeft));
+        SetVisible(visible);
     }
 
     private IEnumerator DepartureSequence(bool toLeft)

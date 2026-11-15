@@ -6,8 +6,6 @@ public class GameUI : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
 
-    [SerializeField] private Slider focusSlider;
-    [SerializeField] private Slider progressSlider;
     [SerializeField] private Slider stressSlider;
 
     [SerializeField] private TMP_Text  timerText;
@@ -34,8 +32,6 @@ public class GameUI : MonoBehaviour
 
     void UpdateUI(GameState state)
     {
-        focusSlider.value = state.Focus;
-        progressSlider.value = state.Progress;
         stressSlider.value = state.Stress;
 
         int seconds = Mathf.CeilToInt(state.RemainingTime);
