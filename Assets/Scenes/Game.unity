@@ -761,6 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add754a3c6c67e04db380b7275330748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CourierInteraction
+  blackout: {fileID: 37078716}
   courier: {fileID: 521611616}
   interactionType: 1
   mainCamera: {fileID: 519420031}
@@ -1590,6 +1591,7 @@ MonoBehaviour:
   hoverSizeMultiplier: 0.65
   zoomInSpeed: 35
   zoomOutSpeed: 12
+  focusDelay: 0.5
 --- !u!1 &521611613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,6 +2365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fe3dee0151ba24291727c4d6c97c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NeighbourInteraction
+  blackout: {fileID: 37078716}
   neighbour: {fileID: 1465601326}
   mainCamera: {fileID: 519420031}
   gameManager: {fileID: 11752350}
@@ -2745,6 +2748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2dfdbc6f8a77d4c82d4555ec265264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoffeeInteraction
+  blackout: {fileID: 37078716}
   interactionCamera: {fileID: 519420031}
   coffee: {fileID: 282600946}
   hoverTint: {r: 0.75, g: 0.9, b: 1, a: 1}
@@ -2980,6 +2984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d952ebb94ec43c990395b877413dfab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhoneInteraction
+  blackout: {fileID: 37078716}
   interactionCamera: {fileID: 519420031}
   panel: {fileID: 642858730}
   hoverTint: {r: 0.75, g: 0.9, b: 1, a: 1}
@@ -3551,6 +3556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add754a3c6c67e04db380b7275330748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CourierInteraction
+  blackout: {fileID: 37078716}
   courier: {fileID: 521611616}
   interactionType: 0
   mainCamera: {fileID: 519420031}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public enum InteractionType 
 {
@@ -9,6 +10,7 @@ public enum InteractionType
 
 public class CourierInteraction : MonoBehaviour
 {
+    [SerializeField] private BlackPanelController blackout;
     [SerializeField] private CourierDistraction courier;
     [SerializeField] private InteractionType interactionType;
     [SerializeField] private Camera mainCamera;
@@ -46,14 +48,19 @@ public class CourierInteraction : MonoBehaviour
             hitArea == null)
             return;
 
-        // ѕосле завершени€ игры взаимодействи€ запрещены.
-        if (gameManager != null && !gameManager.IsPlaying)
+        if (gameManager == null ||
+             !gameManager.IsPlaying ||
+             !courier.IsCourierWaiting ||
+             (blackout != null && blackout.IsBusy))
         {
             ResetHover();
+
+            if (cameraFollow != null)
+                cameraFollow.ReleaseFocus(hitArea);
+
             return;
         }
 
-        // ѕровер€ем, доступно ли взаимодействие.
         bool canInteract = interactionType switch
         {
             InteractionType.Doorbell =>

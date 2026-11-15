@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class NeighbourInteraction : MonoBehaviour
 {
+    [SerializeField] private BlackPanelController blackout;
     [SerializeField] private NeighbourDistraction neighbour;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameManager gameManager;
@@ -41,9 +42,16 @@ public class NeighbourInteraction : MonoBehaviour
             hitArea == null)
             return;
 
-        if (gameManager != null && !gameManager.IsPlaying)
+        if (gameManager == null ||
+             !gameManager.IsPlaying ||
+             !neighbour.IsNeighbourWaiting ||
+             (blackout != null && blackout.IsBusy))
         {
             ResetHover();
+
+            if (cameraFollow != null)
+                cameraFollow.ReleaseFocus(hitArea);
+
             return;
         }
 

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
 public sealed class PhoneInteraction : MonoBehaviour
 {
+    [SerializeField] private BlackPanelController blackout;
     [SerializeField] private Camera interactionCamera;
     [SerializeField] private PhoneDistraction panel;
     [SerializeField] private Color hoverTint = new Color(0.75f, 0.9f, 1f);
@@ -27,6 +28,19 @@ public sealed class PhoneInteraction : MonoBehaviour
     {
         if (panel == null || interactionCamera == null)
             return;
+
+        if (blackout != null && blackout.IsBusy)
+        {
+            phoneSprite.color = originalTint;
+
+            if (cameraFollow != null &&
+                cameraFollow.FocusedTarget == hitArea)
+            {
+                cameraFollow.ReleaseFocus(hitArea);
+            }
+
+            return;
+        }
 
         Mouse mouse = Mouse.current;
         bool cancel = mouse != null && mouse.rightButton.wasPressedThisFrame;
@@ -69,8 +83,6 @@ public sealed class PhoneInteraction : MonoBehaviour
 
                 Debug.Log("Phone active: " + panel.IsActive);
             }
-            if (hovering && mouse.leftButton.wasPressedThisFrame)
-                panel.Activate();
         }
 
         panelWasOpen = panel.IsActive;

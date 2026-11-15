@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class CoffeeInteraction : MonoBehaviour
 {
+    [SerializeField] private BlackPanelController blackout;
     [SerializeField] private Camera interactionCamera;
     [SerializeField] private CoffeeDistraction coffee;
     [SerializeField] private Color hoverTint = new Color(0.75f, 0.9f, 1f);
@@ -26,6 +27,20 @@ public class CoffeeInteraction : MonoBehaviour
     {
         if (coffee == null || interactionCamera == null)
             return;
+
+
+        if (blackout != null && blackout.IsBusy)
+        {
+            cupSprite.color = originalTint;
+
+            if (cameraFollow != null &&
+                cameraFollow.FocusedTarget == hitArea)
+            {
+                cameraFollow.ReleaseFocus(hitArea);
+            }
+
+            return;
+        }
 
         Mouse mouse = Mouse.current;
 

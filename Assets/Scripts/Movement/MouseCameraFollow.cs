@@ -18,6 +18,10 @@ public class MouseCameraFollow : MonoBehaviour
     [SerializeField, Min(0.1f)] private float zoomInSpeed = 12f;
     [SerializeField, Min(0.1f)] private float zoomOutSpeed = 8f;
 
+    [Header("Hover Delay")]
+    [SerializeField, Range(0.5f, 3f)]
+    private float focusDelay = 1.5f;
+
     private Camera cam;
     private float normalSize;
     private Collider2D focusedTarget;
@@ -25,14 +29,26 @@ public class MouseCameraFollow : MonoBehaviour
     private Collider2D releasedTarget;
     private Vector2 previousCursor;
 
+    private Collider2D hoveredTarget;
+    private float hoverTimer;
+
     public void ReleaseFocus(Collider2D target)
     {
-        if (target == null || focusedTarget != target)
+        if (target == null)
             return;
 
-        releasedTarget = focusedTarget;
-        focusedTarget = null;
-        focusedSprite = null;
+        if (focusedTarget == target)
+        {
+            releasedTarget = target;
+            focusedTarget = null;
+            focusedSprite = null;
+        }
+
+        if (hoveredTarget == target)
+        {
+            hoveredTarget = null;
+            hoverTimer = 0f;
+        }
     }
 
     private void Awake()
@@ -81,32 +97,35 @@ public class MouseCameraFollow : MonoBehaviour
 
         Vector2 worldPoint = (Vector2)cam.ScreenToWorldPoint(cursor);
         bool pointerInside = mouse != null && viewport.Contains(cursor);
-        bool cursorMoved = !cursor.Equals(previousCursor);
-        previousCursor = cursor;
-        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
+        if (releasedTarget != null &&
+    (!pointerInside ||
+     !IsPointerOver(releasedTarget, worldPoint)))
+        {
+            releasedTarget = null;
+        }
+
+        // Если объект исчез или выключился — снимаем фокус.
+        if (focusedTarget != null &&
+            !focusedTarget.isActiveAndEnabled)
         {
             ReleaseFocus(focusedTarget);
         }
-        else if (focusedTarget == null || !focusedTarget.isActiveAndEnabled)
+
+        // Правая кнопка снимает фокус.
+        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
         {
-            if (releasedTarget != null &&
-                (!pointerInside || !IsPointerOver(releasedTarget, worldPoint)))
-                releasedTarget = null;
+            ReleaseFocus(focusedTarget);
 
-            if (pointerInside)
-            {
-                Collider2D target = FindTarget(worldPoint);
-
-                if (target != null)
-                    SetFocus(target);
-            }
+            hoveredTarget = null;
+            hoverTimer = 0f;
         }
-        else if (pointerInside && cursorMoved)
+        else
         {
-            // Keep the current focus over empty space, but allow another visible target.
-            Collider2D nextTarget = FindTarget(worldPoint);
-            if (nextTarget != null && nextTarget != focusedTarget)
-                SetFocus(nextTarget);
+            UpdateHoverFocus(
+                worldPoint,
+                pointerInside,
+                Time.unscaledDeltaTime
+            );
         }
 
         bool focusing = focusedTarget != null;
@@ -149,8 +168,6 @@ public class MouseCameraFollow : MonoBehaviour
             position.y = next.y;
         }
 
-        // Ограничиваем камеру границами фона
-        // независимо от режима фокусировки.
         Vector2 range = GetPanRange(bounds, extents);
 
         position.x = Mathf.Clamp(
@@ -189,6 +206,35 @@ public class MouseCameraFollow : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void UpdateHoverFocus(Vector2 worldPoint, bool pointerInside, float dt)
+    {
+        Collider2D target = pointerInside
+            ? FindTarget(worldPoint)
+            : null;
+
+        if (target != hoveredTarget)
+        {
+            hoveredTarget = target;
+            hoverTimer = 0f;
+        }
+
+        if (target == null)
+            return;
+
+        if (focusedTarget == target)
+            return;
+
+        hoverTimer += dt;
+
+        if (hoverTimer >= focusDelay)
+        {
+            SetFocus(target);
+
+            hoveredTarget = null;
+            hoverTimer = 0f;
+        }
     }
 
     private static bool IsPointerOver(Collider2D target, Vector2 point)
