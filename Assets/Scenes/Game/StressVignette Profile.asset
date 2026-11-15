@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7312395401326098837
+--- !u!114 &-7168505833805649819
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,7 +15,7 @@ MonoBehaviour:
   active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.31536376, g: 0.089678906, b: 0.089678906, a: 1}
+    m_Value: {r: 0.44474387, g: 0.09769978, b: 0.09769978, a: 1}
   center:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
@@ -41,4 +41,4 @@ MonoBehaviour:
   m_Name: StressVignette Profile
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: -7312395401326098837}
+  - {fileID: -7168505833805649819}

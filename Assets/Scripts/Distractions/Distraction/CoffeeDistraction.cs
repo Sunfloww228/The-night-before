@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public sealed class CoffeeDistraction : DistractionBase
 {
+    [SerializeField] private DifficultyManager difficultyManager;
+
     [Header("UI")]
     [SerializeField] private GameObject coffeeGroundsPanel;
     [SerializeField] private GameObject coffeeMakingPanel;
@@ -31,6 +33,23 @@ public sealed class CoffeeDistraction : DistractionBase
     [SerializeField] private Image coffeeMachineImage;
 
     private Sprite idleMachineSprite;
+
+    private void ApplyDifficulty()
+    {
+        if (difficultyManager == null ||
+            difficultyManager.Coffee == null)
+            return;
+
+        var settings = difficultyManager.Coffee;
+
+        brewTime = settings.brewTime;
+        coolTime = settings.coolTime;
+        crashDelay = settings.crashDelay;
+
+        hotReward = settings.hotReward;
+        coolReward = settings.coolReward;
+        crashFocusCost = settings.crashFocusCost;
+    }
 
     private void ShowStaticMachine()
     {
@@ -82,6 +101,7 @@ public sealed class CoffeeDistraction : DistractionBase
             return;
 
         Debug.Log("Проверка пройдена");
+        ApplyDifficulty();
 
         machineOpen = true;
         groundsAdded = false;

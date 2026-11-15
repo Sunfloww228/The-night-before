@@ -3,6 +3,8 @@ using System.Collections;
 
 public class NeighbourDistraction : DistractionBase
 {
+    [SerializeField] private DifficultyManager difficultyManager;
+
     [SerializeField] private InteractionBlocker interactionBlocker;
     [SerializeField] private BlackPanelController blackout;
     [SerializeField] private GameObject neighbourIcon;
@@ -40,9 +42,26 @@ public class NeighbourDistraction : DistractionBase
         Activate();
 
     }
+    private void ApplyDifficulty()
+    {
+        if (difficultyManager == null ||
+            difficultyManager.Neighbour == null)
+            return;
 
+        var settings = difficultyManager.Neighbour;
+
+        minAppearTime = settings.minAppearTime;
+        maxAppearTime = settings.maxAppearTime;
+        waitTime = settings.waitTime;
+
+        normalAudioInterval = settings.normalAudioInterval;
+
+        focusLoss = settings.focusLoss;
+        stressPenalty = settings.stressPenalty;
+    }
     private void ResetNeighbour() 
     {
+        ApplyDifficulty();
         appearTimer = Random.Range(minAppearTime, maxAppearTime);
 
         waitTimer = 0;

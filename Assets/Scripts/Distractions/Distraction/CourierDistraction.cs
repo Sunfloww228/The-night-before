@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CourierDistraction : DistractionBase
 {
+    [SerializeField] private DifficultyManager difficultyManager;
+
     [SerializeField] private GameObject bellIcon;
     [SerializeField] private AudioSource bellAudio;
 
@@ -48,8 +50,37 @@ public class CourierDistraction : DistractionBase
 
     }
 
+    private void ApplyDifficulty()
+    {
+        if (difficultyManager == null ||
+            difficultyManager.Courier == null)
+            return;
+
+        var settings = difficultyManager.Courier;
+
+        minAppearTime = settings.minAppearTime;
+        maxAppearTime = settings.maxAppearTime;
+        waitTime = settings.waitTime;
+
+        normalRingInterval = settings.normalRingInterval;
+        urgentRingInterval = settings.urgentRingInterval;
+        urgentAfter = settings.urgentAfter;
+
+        ringingFocusLoss = settings.ringingFocusLoss;
+        pizzaFocusReward = settings.pizzaFocusReward;
+        pizzaStressReduction = settings.pizzaStressReduction;
+
+        missedCourierFocusPenalty =
+            settings.missedCourierFocusPenalty;
+
+        missedCourierStressPenalty =
+            settings.missedCourierStressPenalty;
+    }
+
     private void ResetCourier() 
     {
+        ApplyDifficulty();
+
         appearTimer = Random.Range(minAppearTime, maxAppearTime);
 
         waitTimer = 0;

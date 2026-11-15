@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
@@ -64,5 +65,10 @@ public class GameUI : MonoBehaviour
     {
         resultPanel.SetActive(false);
         gameManager.RestartGame();
+    }
+    public void ReturnToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
     }
 }

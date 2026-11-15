@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AdvertismentDistraction : DistractionBase
 {
+    [SerializeField] private DifficultyManager difficultyManager;
+
     [SerializeField] private AdvertisementSlot[] advertisements;
 
     [SerializeField, Min(0f)] private float minAppearTime = 15f;
@@ -25,6 +27,21 @@ public class AdvertismentDistraction : DistractionBase
         yield return new WaitUntil(() => CanActivate());
 
         Activate();
+    }
+    private void ApplyDifficulty()
+    {
+        if (difficultyManager == null ||
+            difficultyManager.Advertisement == null)
+            return;
+
+        var settings = difficultyManager.Advertisement;
+
+        minAppearTime = settings.minAppearTime;
+        maxAppearTime = settings.maxAppearTime;
+        minAds = settings.minAds;
+        maxAds = settings.maxAds;
+
+        focusLossPerSecond = settings.focusLossPerSecond;
     }
 
     public override void Tick(float dt)
@@ -129,6 +146,7 @@ public class AdvertismentDistraction : DistractionBase
 
     private void ResetAdvertisements()
     {
+        ApplyDifficulty();
         openAdsCount = 0;
 
         if (advertisements != null)

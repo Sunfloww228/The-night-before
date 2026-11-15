@@ -127,6 +127,8 @@ public sealed class GameManager : MonoBehaviour
 
         if (status != GameStatus.Running)
         {
+            DifficultiesUnlock.Unlock();
+
             SessionEnded?.Invoke(status);
             OnGameFinished?.Invoke(status == GameStatus.Won);
         }

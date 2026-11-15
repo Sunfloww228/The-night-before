@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public sealed class PhoneDistraction : DistractionBase
 {
+    [SerializeField] private DifficultyManager difficultyManager;
+
     [SerializeField] private GameObject telephonePanel;
     [SerializeField] private Image frame;
     [SerializeField] private Image display;
@@ -23,6 +25,24 @@ public sealed class PhoneDistraction : DistractionBase
     private float elapsed;
     private float cardElapsed;
 
+    private void ApplyDifficulty()
+    {
+        if (difficultyManager == null ||
+            difficultyManager.Phone == null)
+            return;
+
+        var settings = difficultyManager.Phone;
+
+        minMemes = settings.minMemes;
+        maxMemes = settings.maxMemes;
+        swipeCooldown = settings.swipeCooldown;
+        watchTime = settings.watchTime;
+        stuckAfter = settings.stuckAfter;
+
+        focusPerSecond = settings.focusPerSecond;
+        stressReward = settings.stressReward;
+    }
+
     public override void Activate()
     {
         if (IsActive || !CanActivate())
@@ -30,6 +50,7 @@ public sealed class PhoneDistraction : DistractionBase
 
         if (interactionBlocker != null && interactionBlocker.IsBlocked)
             return;
+        ApplyDifficulty();
         remainingMemes = Random.Range(minMemes, Mathf.Max(minMemes, maxMemes) + 1);
         elapsed = 0f;
         ShowCard();

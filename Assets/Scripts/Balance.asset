@@ -15,7 +15,7 @@ MonoBehaviour:
   durationSeconds: 120
   startingFocus: 65
   startingStress: 0
-  workStressPerSecond: 10
+  workStressPerSecond: 1.1
   stressDamageThreshold: 55
   stressDamageFactor: 0.04
   flowThreshold: 80

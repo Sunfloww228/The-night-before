@@ -5,6 +5,7 @@ public sealed class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject difficultyPanel;
 
     public void StartGame()
     {
@@ -21,5 +22,15 @@ public sealed class MainMenu : MonoBehaviour
     {
         mainPanel.SetActive(true);
         settingsPanel.SetActive(false);
+    }
+    public void OpenDifficulties()
+    {
+        difficultyPanel.SetActive(true);
+        mainPanel.SetActive(false);
+    }
+    public void Back()
+    {
+        difficultyPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 }
