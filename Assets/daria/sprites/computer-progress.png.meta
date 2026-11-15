@@ -1,0 +1,923 @@
+fileFormatVersion: 2
+guid: e38434a9f7180604c91ee3ed1167298d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2928788094818354800
+    second: computer-progress_0
+  - first:
+      213: 6313048256719502854
+    second: computer-progress_1
+  - first:
+      213: 3289116944638817955
+    second: computer-progress_2
+  - first:
+      213: 9134961833004443785
+    second: computer-progress_3
+  - first:
+      213: 2629333732486868328
+    second: computer-progress_4
+  - first:
+      213: -7183670675686589147
+    second: computer-progress_5
+  - first:
+      213: -7247118946381242606
+    second: computer-progress_6
+  - first:
+      213: -305520805451476308
+    second: computer-progress_7
+  - first:
+      213: -5777445236808267448
+    second: computer-progress_8
+  - first:
+      213: 7027264396106002623
+    second: computer-progress_9
+  - first:
+      213: 2951513141954785250
+    second: computer-progress_10
+  - first:
+      213: -4630079379742555017
+    second: computer-progress_11
+  - first:
+      213: -6546572840921735736
+    second: computer-progress_12
+  - first:
+      213: -2722639843722379270
+    second: computer-progress_13
+  - first:
+      213: -6292174069201731835
+    second: computer-progress_14
+  - first:
+      213: -266837100478205944
+    second: computer-progress_15
+  - first:
+      213: 1001853397386399234
+    second: computer-progress_16
+  - first:
+      213: -2484663911769950554
+    second: computer-progress_17
+  - first:
+      213: -5074130502557124341
+    second: computer-progress_18
+  - first:
+      213: -8776634813832675529
+    second: computer-progress_19
+  - first:
+      213: -2384731167195448840
+    second: computer-progress_20
+  - first:
+      213: -2793478744725679081
+    second: computer-progress_21
+  - first:
+      213: 5767644440390034259
+    second: computer-progress_22
+  - first:
+      213: 8569173565460321535
+    second: computer-progress_23
+  - first:
+      213: -1012229233343446415
+    second: computer-progress_24
+  - first:
+      213: -2588055897227487875
+    second: computer-progress_25
+  - first:
+      213: -1398657519662215646
+    second: computer-progress_26
+  - first:
+      213: -6816757476436839462
+    second: computer-progress_27
+  - first:
+      213: -1877695040435400356
+    second: computer-progress_28
+  - first:
+      213: 4534760895057349166
+    second: computer-progress_29
+  - first:
+      213: 3419224897649087127
+    second: computer-progress_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: computer-progress_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 871
+        width: 207
+        height: 156
+      alignment: 9
+      pivot: {x: 0.5024242, y: 0.64314467}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0768a0e314525a820800000000000000
+      internalID: 2928788094818354800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 871
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60e3aa701f37c9750800000000000000
+      internalID: 6313048256719502854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_2
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 871
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a63ae54f6a45ad20800000000000000
+      internalID: 3289116944638817955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_3
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 871
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9882bf45367e5ce70800000000000000
+      internalID: 9134961833004443785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_4
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 871
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86de4d059154d7420800000000000000
+      internalID: 2629333732486868328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_5
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 871
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52d7f48c4997e4c90800000000000000
+      internalID: -7183670675686589147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_6
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 697
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21f51f317bf0d6b90800000000000000
+      internalID: -7247118946381242606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_7
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 697
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca2d297327292cbf0800000000000000
+      internalID: -305520805451476308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_8
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 697
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84945c6da2462dfa0800000000000000
+      internalID: -5777445236808267448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_9
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 697
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb0f5a87cbbd58160800000000000000
+      internalID: 7027264396106002623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_10
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 697
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2efac189091e5f820800000000000000
+      internalID: 2951513141954785250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_11
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 697
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7748598d557aebfb0800000000000000
+      internalID: -4630079379742555017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_12
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 523
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cdd3a8bfa6e525a0800000000000000
+      internalID: -6546572840921735736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_13
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 523
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aff3a9fbc7d373ad0800000000000000
+      internalID: -2722639843722379270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_14
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 523
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f7e4c7505bda8a0800000000000000
+      internalID: -6292174069201731835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_15
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 523
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 800f91522110c4cf0800000000000000
+      internalID: -266837100478205944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_16
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 523
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e0c3c5b5c47ed00800000000000000
+      internalID: 1001853397386399234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_17
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 523
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a638b82653b48dd0800000000000000
+      internalID: -2484663911769950554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_18
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 349
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09bb1b11311599b0800000000000000
+      internalID: -5074130502557124341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_19
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 349
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73f3d2e2321233680800000000000000
+      internalID: -8776634813832675529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_20
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 349
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f9338663abb7eed0800000000000000
+      internalID: -2384731167195448840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_21
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 349
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7149505d1e19b39d0800000000000000
+      internalID: -2793478744725679081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_22
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 349
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 353643c6f0aca0050800000000000000
+      internalID: 5767644440390034259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_23
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 349
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff41ee3d4f1dbe670800000000000000
+      internalID: 8569173565460321535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_24
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 175
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1724c4310e6d3f1f0800000000000000
+      internalID: -1012229233343446415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_25
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 175
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7596e2afd0651cd0800000000000000
+      internalID: -2588055897227487875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_26
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 175
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22eca127568f69ce0800000000000000
+      internalID: -1398657519662215646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_27
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 175
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad37ef021330661a0800000000000000
+      internalID: -6816757476436839462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_28
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 175
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c51d5562f4611f5e0800000000000000
+      internalID: -1877695040435400356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_29
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 175
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2ac9330205beee30800000000000000
+      internalID: 4534760895057349166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: computer-progress_30
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1
+        width: 207
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7929b87bde6837f20800000000000000
+      internalID: 3419224897649087127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: b876b55f7918bff4f858db46dc1d5723
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      computer-progress_0: 2928788094818354800
+      computer-progress_1: 6313048256719502854
+      computer-progress_10: 2951513141954785250
+      computer-progress_11: -4630079379742555017
+      computer-progress_12: -6546572840921735736
+      computer-progress_13: -2722639843722379270
+      computer-progress_14: -6292174069201731835
+      computer-progress_15: -266837100478205944
+      computer-progress_16: 1001853397386399234
+      computer-progress_17: -2484663911769950554
+      computer-progress_18: -5074130502557124341
+      computer-progress_19: -8776634813832675529
+      computer-progress_2: 3289116944638817955
+      computer-progress_20: -2384731167195448840
+      computer-progress_21: -2793478744725679081
+      computer-progress_22: 5767644440390034259
+      computer-progress_23: 8569173565460321535
+      computer-progress_24: -1012229233343446415
+      computer-progress_25: -2588055897227487875
+      computer-progress_26: -1398657519662215646
+      computer-progress_27: -6816757476436839462
+      computer-progress_28: -1877695040435400356
+      computer-progress_29: 4534760895057349166
+      computer-progress_3: 9134961833004443785
+      computer-progress_30: 3419224897649087127
+      computer-progress_4: 2629333732486868328
+      computer-progress_5: -7183670675686589147
+      computer-progress_6: -7247118946381242606
+      computer-progress_7: -305520805451476308
+      computer-progress_8: -5777445236808267448
+      computer-progress_9: 7027264396106002623
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
