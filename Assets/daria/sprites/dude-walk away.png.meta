@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: 639e34de1f6de294aa94baa5552596ab
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1106654751222025512
+    second: dude-walk away_0
+  - first:
+      213: 7662370829042857810
+    second: dude-walk away_1
+  - first:
+      213: 4046948517694116415
+    second: dude-walk away_2
+  - first:
+      213: 2392651270610803662
+    second: dude-walk away_3
+  - first:
+      213: -772951386357566787
+    second: dude-walk away_4
+  - first:
+      213: -7406287877258609997
+    second: dude-walk away_5
+  - first:
+      213: -2506609951011264625
+    second: dude-walk away_6
+  - first:
+      213: 4620271492346847632
+    second: dude-walk away_7
+  - first:
+      213: -1728154489652199254
+    second: dude-walk away_8
+  - first:
+      213: -4211632068173370784
+    second: dude-walk away_9
+  - first:
+      213: 5037947779406514825
+    second: dude-walk away_10
+  - first:
+      213: -6660217689477372814
+    second: dude-walk away_11
+  - first:
+      213: 4139856733015174991
+    second: dude-walk away_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: dude-walk away_0
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 4319
+        width: 932
+        height: 967
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d2b968fd5f54a0f0800000000000000
+      internalID: -1106654751222025512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_1
+      rect:
+        serializedVersion: 2
+        x: 2739
+        y: 4319
+        width: 932
+        height: 1082
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2573a6a0ca5365a60800000000000000
+      internalID: 7662370829042857810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_2
+      rect:
+        serializedVersion: 2
+        x: 4829
+        y: 4319
+        width: 937
+        height: 1192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3293753c36a92830800000000000000
+      internalID: 4046948517694116415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_3
+      rect:
+        serializedVersion: 2
+        x: 6929
+        y: 4319
+        width: 942
+        height: 1357
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecbd42067a7643120800000000000000
+      internalID: 2392651270610803662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_4
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 2879
+        width: 477
+        height: 1367
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2f2833fcce545f0800000000000000
+      internalID: -772951386357566787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_5
+      rect:
+        serializedVersion: 2
+        x: 3134
+        y: 2879
+        width: 477
+        height: 1327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3baf7b37a64973990800000000000000
+      internalID: -7406287877258609997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_6
+      rect:
+        serializedVersion: 2
+        x: 5349
+        y: 2879
+        width: 477
+        height: 1282
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f87a387b78bb63dd0800000000000000
+      internalID: -2506609951011264625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_7
+      rect:
+        serializedVersion: 2
+        x: 7664
+        y: 2879
+        width: 477
+        height: 1227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 091a23b61708e1040800000000000000
+      internalID: 4620271492346847632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_8
+      rect:
+        serializedVersion: 2
+        x: 1544
+        y: 1439
+        width: 477
+        height: 1257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0c847d5ac5408e0800000000000000
+      internalID: -1728154489652199254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_9
+      rect:
+        serializedVersion: 2
+        x: 3749
+        y: 1439
+        width: 452
+        height: 1347
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06ae1ebb2f64d85c0800000000000000
+      internalID: -4211632068173370784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_10
+      rect:
+        serializedVersion: 2
+        x: 5989
+        y: 1439
+        width: 312
+        height: 1317
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98a4e7c20d26ae540800000000000000
+      internalID: 5037947779406514825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_11
+      rect:
+        serializedVersion: 2
+        x: 8314
+        y: 2359
+        width: 86
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 274adeb7c472293a0800000000000000
+      internalID: -6660217689477372814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dude-walk away_12
+      rect:
+        serializedVersion: 2
+        x: 8224
+        y: 1439
+        width: 176
+        height: 912
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4fe068c3c9b37930800000000000000
+      internalID: 4139856733015174991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      dude-walk away_0: -1106654751222025512
+      dude-walk away_1: 7662370829042857810
+      dude-walk away_10: 5037947779406514825
+      dude-walk away_11: -6660217689477372814
+      dude-walk away_12: 4139856733015174991
+      dude-walk away_2: 4046948517694116415
+      dude-walk away_3: 2392651270610803662
+      dude-walk away_4: -772951386357566787
+      dude-walk away_5: -7406287877258609997
+      dude-walk away_6: -2506609951011264625
+      dude-walk away_7: 4620271492346847632
+      dude-walk away_8: -1728154489652199254
+      dude-walk away_9: -4211632068173370784
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

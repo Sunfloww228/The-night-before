@@ -5,6 +5,8 @@ public class NeighbourDistraction : DistractionBase
 {
     [SerializeField] private BlackPanelController blackout;
     [SerializeField] private GameObject neighbourIcon;
+    [SerializeField] private SpriteRenderer neighbourIconRenderer;
+    [SerializeField, Min(0.05f)] private float blinkInterval = 0.3f;
     [SerializeField] private AudioSource neighbourAudio;
     [SerializeField] private AudioSource knockingAudio;
 
@@ -86,6 +88,10 @@ public class NeighbourDistraction : DistractionBase
             return;
 
         waitTimer += dt;
+
+        float blinkPhase = Mathf.Repeat(waitTimer, blinkInterval * 2f);
+        SetNoiseIconAlpha(blinkPhase < blinkInterval ? 1f : 0f);
+
         soundTimer -= dt;
 
         if (soundTimer <= 0f)
@@ -103,6 +109,8 @@ public class NeighbourDistraction : DistractionBase
         neighbourWaiting = true;
         waitTimer = 0f;
         soundTimer = Mathf.Max(0.1f, normalAudioInterval);
+
+        SetNoiseIconAlpha(1f);
 
         if (neighbourIcon != null)
             neighbourIcon.SetActive(true);
@@ -249,6 +257,17 @@ public class NeighbourDistraction : DistractionBase
         //if (player != null)
         //    player.ResetPosition();
     }
+
+    private void SetNoiseIconAlpha(float alpha)
+    {
+        if (neighbourIconRenderer == null)
+            return;
+
+        Color color = neighbourIconRenderer.color;
+        color.a = alpha;
+        neighbourIconRenderer.color = color;
+    }
+
     public override void Resolve()
     {
         // Останавливаем поход к батарее
